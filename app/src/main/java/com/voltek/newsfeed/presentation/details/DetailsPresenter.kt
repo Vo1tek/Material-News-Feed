@@ -3,15 +3,14 @@ package com.voltek.newsfeed.presentation.details
 import com.arellomobile.mvp.InjectViewState
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.domain.entity.ArticleUI
+import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
 import com.voltek.newsfeed.navigation.command.CommandShareArticle
-import com.voltek.newsfeed.navigation.command.CommandStartActivity
 import com.voltek.newsfeed.navigation.proxy.Router
 import com.voltek.newsfeed.presentation.BasePresenter
 import com.voltek.newsfeed.presentation.Event
 import com.voltek.newsfeed.presentation.details.DetailsContract.DetailsModel
 import com.voltek.newsfeed.presentation.details.DetailsContract.DetailsView
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesActivity
 import javax.inject.Inject
 
 @InjectViewState
@@ -30,7 +29,7 @@ class DetailsPresenter(private val article: ArticleUI) : BasePresenter<DetailsVi
                 }
             }
             is Event.OpenWebsite -> mRouter.execute(CommandOpenWebsite(article.url ?: ""))
-            is Event.OpenNewsSources -> mRouter.execute(CommandStartActivity(NewsSourcesActivity()))
+            is Event.OpenNewsSources -> mRouter.execute(CommandOpenNewsSourcesScreen())
         }
     }
 

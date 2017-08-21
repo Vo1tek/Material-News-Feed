@@ -6,13 +6,12 @@ import com.voltek.newsfeed.domain.exception.NoNewsSourcesSelectedException
 import com.voltek.newsfeed.domain.entity.SourceUI
 import com.voltek.newsfeed.domain.interactor.Parameter
 import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
-import com.voltek.newsfeed.navigation.command.CommandStartActivity
+import com.voltek.newsfeed.navigation.command.CommandOpenArticlesListScreen
+import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.navigation.command.CommandSystemMessage
 import com.voltek.newsfeed.navigation.proxy.Router
 import com.voltek.newsfeed.presentation.BasePresenter
 import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.list.ListActivity
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesActivity
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -57,10 +56,10 @@ class SplashPresenter : BasePresenter<SplashView>() {
     private fun hasEnabled(sources: List<SourceUI>): Boolean = sources.any { it.isEnabled }
 
     private fun result(hasEnabled: Boolean) {
-        mRouter.execute(CommandStartActivity(ListActivity(), finish = true))
+        mRouter.execute(CommandOpenArticlesListScreen())
 
         if (!hasEnabled) {
-            mRouter.execute(CommandStartActivity(NewsSourcesActivity(), finish = true))
+            mRouter.execute(CommandOpenNewsSourcesScreen())
             mRouter.execute(CommandSystemMessage(error = NoNewsSourcesSelectedException()))
         }
     }

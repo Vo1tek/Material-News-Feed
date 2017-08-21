@@ -5,14 +5,13 @@ import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.domain.interactor.Parameter
 import com.voltek.newsfeed.domain.interactor.articles.GetArticlesInteractor
 import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesUpdatesInteractor
-import com.voltek.newsfeed.navigation.command.CommandOpenArticleDetails
-import com.voltek.newsfeed.navigation.command.CommandStartActivity
+import com.voltek.newsfeed.navigation.command.CommandOpenArticleDetailsScreen
+import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.navigation.proxy.Router
 import com.voltek.newsfeed.presentation.BasePresenter
 import com.voltek.newsfeed.presentation.Event
 import com.voltek.newsfeed.presentation.list.ListContract.ListModel
 import com.voltek.newsfeed.presentation.list.ListContract.ListView
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesActivity
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -35,8 +34,8 @@ class ListPresenter : BasePresenter<ListView>() {
     // View notify presenter about events using this method
     override fun notify(event: Event) {
         when (event) {
-            is Event.OpenArticleDetails -> mRouter.execute(CommandOpenArticleDetails(event.article))
-            is Event.OpenNewsSources -> mRouter.execute(CommandStartActivity(NewsSourcesActivity()))
+            is Event.OpenArticleDetails -> mRouter.execute(CommandOpenArticleDetailsScreen(event.article))
+            is Event.OpenNewsSources -> mRouter.execute(CommandOpenNewsSourcesScreen())
             is Event.Refresh -> {
                 if (!mModel.loading) {
                     loadArticles()

@@ -23,5 +23,6 @@ ext.versions = [
         espresso             : '2.2.2',
         junit                : '4.12',
         mockito              : '2.7.3',
-        mockwebserver        : '3.8.0'
+        mockwebserver        : '3.8.0',
+        mockitoKotlin        : '1.5.0'
 ]

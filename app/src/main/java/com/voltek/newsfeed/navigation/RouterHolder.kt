@@ -3,7 +3,7 @@ package com.voltek.newsfeed.navigation
 import com.voltek.newsfeed.navigation.command.CommandNavigatorAttached
 import com.voltek.newsfeed.navigation.proxy.*
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Manages app navigation, lifecycle tied to app process. Can hold only one navigator at a time.
@@ -13,37 +13,32 @@ import timber.log.Timber
  */
 class RouterHolder : Router, NavigatorBinder {
 
-    val CommandsFeed: PublishSubject<Command> = PublishSubject.create()
+    val commandsFeed: PublishSubject<Command> = PublishSubject.create()
 
     private var navigator: Navigator? = null
 
-    private var commandsQueue: ArrayList<Command> = ArrayList()
+    private var commandsQueue: CopyOnWriteArrayList<Command> = CopyOnWriteArrayList()
 
     init {
         subscribeToCommandsFeed()
     }
 
     private fun subscribeToCommandsFeed() {
-        CommandsFeed
+        commandsFeed
                 .filter { !runCommand(it) } // If command executed
                 .filter { !runQueue(it) } // If new navigator attached
-                .subscribe({
-                    addToQueue(it)
-                }, {
-                    Timber.e(it)
-                    subscribeToCommandsFeed() // Re-subscribe on exception
-                })
+                .subscribe { addToQueue(it) }
     }
 
     // Router
     override fun execute(command: Command) {
-        CommandsFeed.onNext(command)
+        commandsFeed.onNext(command)
     }
 
     // NavigatorBinder
     override fun setNavigator(navigator: Navigator) {
         this.navigator = navigator
-        CommandsFeed.onNext(CommandNavigatorAttached())
+        commandsFeed.onNext(CommandNavigatorAttached())
     }
 
     override fun removeNavigator() {
@@ -62,30 +57,28 @@ class RouterHolder : Router, NavigatorBinder {
      * @return true, if new navigator has been attached (tries to execute all commands in queue)
      *         else returns false. (Without queue execution)
      */
-    private fun runQueue(command: Command): Boolean {
-        if (command is CommandNavigatorAttached) {
-            commandsQueue
-                    .filter { runCommand(it) }
-                    .forEach { removeFromQueue(it) }
+    private fun runQueue(command: Command) =
+            if (command is CommandNavigatorAttached) {
+                commandsQueue
+                        .filter { runCommand(it) }
+                        .forEach { removeFromQueue(it) }
 
-            return true
-        } else {
-            return false
-        }
-    }
+                true
+            } else {
+                false
+            }
 
     /**
      * @return true, if command was added to queue, else false.
      */
-    private fun addToQueue(command: Command): Boolean {
-        if (command.addToQueue) {
-            if (commandsQueue.isNotEmpty())
-                command.id = commandsQueue[commandsQueue.lastIndex].id + 1
-            return commandsQueue.add(command)
-        } else {
-            return false
-        }
-    }
+    private fun addToQueue(command: Command) =
+            if (command.addToQueue) {
+                if (commandsQueue.isNotEmpty())
+                    command.id = commandsQueue[commandsQueue.lastIndex].id + 1
+                commandsQueue.add(command)
+            } else {
+                false
+            }
 
     /**
      * @return true, if command removed successfully, else false

@@ -1,15 +1,17 @@
 package com.voltek.newsfeed.presentation.list
 
+import android.content.Intent
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.domain.entity.ArticleUI
-import com.voltek.newsfeed.navigation.command.CommandOpenArticleDetails
+import com.voltek.newsfeed.navigation.command.CommandOpenArticleDetailsScreen
+import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
-import com.voltek.newsfeed.navigation.command.CommandStartActivity
 import com.voltek.newsfeed.navigation.proxy.Command
 import com.voltek.newsfeed.presentation.BaseActivity
 import com.voltek.newsfeed.navigation.command.CommandShareArticle
 import com.voltek.newsfeed.presentation.details.DetailsActivity
 import com.voltek.newsfeed.presentation.details.DetailsFragment
+import com.voltek.newsfeed.presentation.news_sources.NewsSourcesActivity
 import kotlinx.android.synthetic.main.activity_list.*
 import org.parceler.Parcels
 
@@ -39,8 +41,8 @@ class ListActivity : BaseActivity() {
     }
 
     override fun executeCommand(command: Command): Boolean = when (command) {
-        is CommandStartActivity -> startActivity(command)
-        is CommandOpenArticleDetails -> openDetails(command.article)
+        is CommandOpenNewsSourcesScreen -> openNewsSources()
+        is CommandOpenArticleDetailsScreen -> openDetails(command.article)
         is CommandShareArticle -> shareArticle(command)
         is CommandOpenWebsite -> openWebsite(command)
         else -> false
@@ -54,10 +56,16 @@ class ListActivity : BaseActivity() {
                     DetailsFragment.TAG
             )
         } else {
-            val intent = android.content.Intent(this, DetailsActivity::class.java)
+            val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra(DetailsFragment.ARG_ARTICLE, Parcels.wrap(article))
             startActivity(intent)
         }
+        return true
+    }
+
+    private fun openNewsSources(): Boolean {
+        val intent = Intent(this, NewsSourcesActivity::class.java)
+        startActivity(intent)
         return true
     }
 }

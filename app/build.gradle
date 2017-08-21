@@ -50,6 +50,29 @@ kapt {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Instrumentation tests
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$versions.espresso", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$versions.espresso", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'design'
+    }
+
+    // Unit tests
+    testCompile "junit:junit:$versions.junit"
+    testCompile "org.mockito:mockito-android:$versions.mockito"
+    testCompile "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver", {
+        exclude group: 'com.squareup.okio', module: 'okio'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+    testCompile "com.nhaarman:mockito-kotlin-kt1.1:$versions.mockitoKotlin", {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlinGradlePlugin"
 

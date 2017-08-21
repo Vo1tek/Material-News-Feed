@@ -10,7 +10,6 @@ import com.voltek.newsfeed.utils.SubscriptionsHolder
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
-import com.voltek.newsfeed.navigation.command.CommandStartActivity
 import com.voltek.newsfeed.navigation.proxy.Navigator
 import io.reactivex.disposables.CompositeDisposable
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -39,17 +38,6 @@ abstract class BaseActivity : MvpAppCompatActivity(),
     }
 
     // Base navigator commands
-    protected fun startActivity(command: CommandStartActivity): Boolean {
-        val intent = Intent(this, command.activity)
-
-        startActivity(intent)
-
-        if (command.finish)
-            finish()
-
-        return true
-    }
-
     protected fun shareArticle(command: CommandShareArticle): Boolean {
         if (!command.url.isEmpty() && !command.title.isEmpty()) {
             val shareIntent = Intent(Intent.ACTION_SEND)
