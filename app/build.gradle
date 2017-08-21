@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 android {
@@ -42,78 +43,60 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    supportLibraryVersion = '25.3.1'
-    retrofitVersion = '2.2.0'
-    rxJavaVersion = '2.1.0'
-    rxAndroidVersion = '2.0.1'
-    rxKotlinVersion = '2.0.0'
-    rxBindingKotlinVersion = '2.0.0'
-    daggerVersion = '2.10'
-    glideVersion = '3.7.0'
-    hawkVersion = '2.0.1'
-    kotlinRealmExtensionsVersion = '1.0.7'
-    parcelerVersion = '1.1.6'
-    timberVersion = '4.5.1'
-    calligraphyVersion = '2.2.0'
-    moxyVersion = '1.5.2'
-    recyclerviewAnimatorsVersion = '2.2.6'
+kapt {
+    generateStubs = true
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlinGradlePlugin"
 
     // Android support library
-    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
-    compile "com.android.support:design:${supportLibraryVersion}"
-    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    compile "com.android.support:appcompat-v7:$versions.supportLibrary"
+    compile "com.android.support:design:$versions.supportLibrary"
+    compile "com.android.support:recyclerview-v7:$versions.supportLibrary"
 
     // Networking
-    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
-    compile "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+    compile "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+    compile "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
 
     // Rx
-    compile "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
-    compile "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
-    compile "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}"
-    compile "com.jakewharton.rxbinding2:rxbinding-kotlin:${rxBindingKotlinVersion}"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${rxBindingKotlinVersion}"
-    compile "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:${rxBindingKotlinVersion}"
+    compile "io.reactivex.rxjava2:rxjava:$versions.rxJava"
+    compile "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
+    compile "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin"
+    compile "com.jakewharton.rxbinding2:rxbinding-kotlin:$versions.rxBindingKotlin"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$versions.rxBindingKotlin"
+    compile "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$versions.rxBindingKotlin"
 
     // Dependency injection
-    compile "com.google.dagger:dagger:${daggerVersion}"
-    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.google.dagger:dagger:$versions.dagger"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
     // Images
-    compile "com.github.bumptech.glide:glide:${glideVersion}"
+    compile "com.github.bumptech.glide:glide:$versions.glide"
 
     // Data storage
-    compile "com.orhanobut:hawk:${hawkVersion}"
-    compile "com.github.vicpinm:krealmextensions:${kotlinRealmExtensionsVersion}"
+    compile "com.orhanobut:hawk:$versions.hawk"
+    compile "com.github.vicpinm:krealmextensions:$versions.kotlinRealmExtensions"
 
     // Parcel
-    compile "org.parceler:parceler-api:${parcelerVersion}"
-    kapt "org.parceler:parceler:${parcelerVersion}"
+    compile "org.parceler:parceler-api:$versions.parceler"
+    kapt "org.parceler:parceler:$versions.parceler"
 
     // Logging
-    compile "com.jakewharton.timber:timber:${timberVersion}"
+    compile "com.jakewharton.timber:timber:$versions.timber"
 
     // Fonts
-    compile "uk.co.chrisjenx:calligraphy:${calligraphyVersion}"
+    compile "uk.co.chrisjenx:calligraphy:$versions.calligraphy"
 
     // MVP
-    compile "com.arello-mobile:moxy:${moxyVersion}"
-    compile "com.arello-mobile:moxy-app-compat:${moxyVersion}"
-    kapt "com.arello-mobile:moxy-compiler:${moxyVersion}"
+    compile "com.arello-mobile:moxy:$versions.moxy"
+    compile "com.arello-mobile:moxy-app-compat:$versions.moxy"
+    kapt "com.arello-mobile:moxy-compiler:$versions.moxy"
 
     // Animations
-    compile "jp.wasabeef:recyclerview-animators:${recyclerviewAnimatorsVersion}"
-}
-
-kapt {
-    generateStubs = true
+    compile "jp.wasabeef:recyclerview-animators:$versions.recyclerviewAnimators"
 }

@@ -29,6 +29,7 @@ This app uses [News API](https://newsapi.org/) to retrieve data. You must provid
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [RxBinding](https://github.com/JakeWharton/RxBinding)
+* [RxKotlin](https://github.com/ReactiveX/RxKotlin)
 * [Realm](https://github.com/realm/realm-java)
 * [Kotlin Realm Extensions](https://github.com/vicpinm/Kotlin-Realm-Extensions)
 * [Retrofit](https://github.com/square/retrofit)
