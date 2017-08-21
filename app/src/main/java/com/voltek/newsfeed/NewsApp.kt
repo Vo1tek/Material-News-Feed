@@ -4,6 +4,7 @@ import android.app.Application
 import com.orhanobut.hawk.Hawk
 import com.voltek.newsfeed.dagger.component.*
 import com.voltek.newsfeed.dagger.module.*
+import com.voltek.newsfeed.data.network.BASE_URL
 import com.voltek.newsfeed.navigation.RouterHolder
 import com.voltek.newsfeed.navigation.proxy.NavigatorBinder
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,8 +18,6 @@ class NewsApp : Application() {
     companion object {
 
         // Const
-        private const val BASE_URL = "https://newsapi.org/"
-
         private const val FONT_PATH = "fonts/Roboto-Regular.ttf"
 
         // Navigation
@@ -49,7 +48,6 @@ class NewsApp : Application() {
         val networkModule = NetworkModule(BASE_URL)
         val repositoryModule = RepositoryModule()
         val routerModule = RouterModule(routerHolder)
-        val apiModule = ApiModule()
         val platformModule = PlatformModule()
         val storageModule = StorageModule()
 
@@ -63,14 +61,14 @@ class NewsApp : Application() {
                 .build()
 
         repositoryComponent = DaggerRepositoryComponent.builder()
-                .apiModule(apiModule)
                 .platformModule(platformModule)
                 .storageModule(storageModule)
+                .networkModule(networkModule)
+                .appModule(appModule)
                 .build()
 
         dataComponent = DaggerDataComponent.builder()
                 .appModule(appModule)
-                .networkModule(networkModule)
                 .build()
 
         // Libs init

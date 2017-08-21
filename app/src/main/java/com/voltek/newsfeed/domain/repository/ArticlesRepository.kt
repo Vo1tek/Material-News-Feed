@@ -3,6 +3,7 @@ package com.voltek.newsfeed.domain.repository
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.data.Provider
+import com.voltek.newsfeed.data.network.NewsApi
 import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.Mapper
 import com.voltek.newsfeed.domain.entity.ArticleUI
@@ -14,7 +15,7 @@ import javax.inject.Inject
 class ArticlesRepository {
 
     @Inject
-    lateinit var mNet: Provider.Api.Articles
+    lateinit var mApi: NewsApi
 
     @Inject
     lateinit var mRes: Provider.Platform.Resources
@@ -28,12 +29,12 @@ class ArticlesRepository {
 
         if (!sources.isEmpty()) {
             for (source in sources) {
-                mNet.get(source.id)
+                mApi.fetchArticles(source.id)
                         .subscribe({
                             val result = ArrayList<ArticleUI>()
                             val sourceTitle = ArticleUI()
                             result.add(sourceTitle)
-                            result.addAll(it.map { Mapper.Article(it) })
+                            result.addAll(it.articles.map { Mapper.Article(it) })
                             result.forEach { article -> article.source = source.name }
                             emitter.onNext(Result(result))
                         }, {

@@ -29,7 +29,7 @@ class NewsSourcesInteractor(jobScheduler: Scheduler, uiScheduler: Scheduler)
     override fun buildObservable(parameter: Parameter<Unit?>): Observable<Result<List<SourceUI>?>> {
         if (parameter.flag == REFRESH) {
             return mNewsSourcesRepo
-                    .refresh()
+                    .refresh().toObservable()
 
         } else if (parameter.flag == GET) {
             return mNewsSourcesRepo

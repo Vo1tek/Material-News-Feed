@@ -4,6 +4,7 @@ import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.data.Provider
 import com.voltek.newsfeed.data.entity.SourceRAW
+import com.voltek.newsfeed.data.network.NewsApi
 import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.Mapper
 import com.voltek.newsfeed.domain.entity.SourceUI
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class NewsSourcesRepository {
 
     @Inject
-    lateinit var mNet: Provider.Api.NewsSources
+    lateinit var mApi: NewsApi
 
     @Inject
     lateinit var mDb: Provider.Storage.NewsSources
@@ -31,7 +32,7 @@ class NewsSourcesRepository {
     fun getSourcesEnabledObservable(): Observable<Unit> = mSourcesEnabledSubject
 
     init {
-       NewsApp.repositoryComponent.inject(this)
+        NewsApp.repositoryComponent.inject(this)
     }
 
     fun getAll(): Observable<Result<List<SourceUI>?>> = Observable.create {
@@ -40,9 +41,9 @@ class NewsSourcesRepository {
         val sourcesCache = mDb.queryAll()
 
         if (sourcesCache.isEmpty()) {
-            mNet.get()
+            mApi.fetchSources()
                     .subscribe({
-                        mDb.save(it)
+                        mDb.save(it.sources)
                         emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }))
                     }, {
                         val message: String = when (it) {
@@ -84,32 +85,49 @@ class NewsSourcesRepository {
         emitter.onSuccess(Result(query.map { Mapper.Source(it) }, message))
     }
 
-    fun refresh(): Observable<Result<List<SourceUI>?>> = Observable.create {
-        val emitter = it
-
-        mNet.get()
-                .subscribe({
-                    val current = mDb.queryEnabled()
-                    val new = it as ArrayList
-
-                    for (source in new)
-                        for (enabled in current)
-                            if (source.id == enabled.id)
-                                source.isEnabled = true
-
-                    mDb.deleteAll()
-                    mDb.save(new)
-                    emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }))
-                }, {
-                    val message: String = when (it) {
-                        is NoConnectionException -> mRes.getString(R.string.error_no_connection)
-                        else -> mRes.getString(R.string.error_request_failed)
+    fun refresh(): Single<Result<List<SourceUI>?>> =
+            mApi.fetchSources()
+                    .map { it.sources }
+                    .doOnSuccess(this::cacheSources)
+                    // TODO handle errors
+                    /*.onErrorReturn {
+                        val message: String = when (it) {
+                            is NoConnectionException -> mRes.getString(R.string.error_no_connection)
+                            else -> mRes.getString(R.string.error_request_failed)
+                        }
+                        Result(mDb.queryAll().map { Mapper.Source(it) }, message)
+                    }*/
+                    .flatMap {
+                        Single.fromCallable { Result(mDb.queryAll().map { Mapper.Source(it) }) }
                     }
-                    emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }, message))
-                })
 
-        emitter.onComplete()
-    }
+
+    /*Observable.create {
+val emitter = it
+
+
+        .subscribe({
+            val current = mDb.queryEnabled()
+            val new = it as ArrayList
+
+            for (source in new)
+                for (enabled in current)
+                    if (source.id == enabled.id)
+                        source.isEnabled = true
+
+            mDb.deleteAll()
+            mDb.save(new)
+            emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }))
+        }, {
+            val message: String = when (it) {
+                is NoConnectionException -> mRes.getString(R.string.error_no_connection)
+                else -> mRes.getString(R.string.error_request_failed)
+            }
+            emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }, message))
+        })
+
+emitter.onComplete()
+}*/
 
     fun update(id: String, isEnabled: Boolean): Completable = Completable.create {
         val emitter = it
@@ -124,5 +142,18 @@ class NewsSourcesRepository {
         } else {
             emitter.onError(Exception())
         }
+    }
+
+    private fun cacheSources(sources: List<SourceRAW>) {
+        val current = mDb.queryEnabled()
+        val new = sources as ArrayList
+
+        for (source in new)
+            for (enabled in current)
+                if (source.id == enabled.id)
+                    source.isEnabled = true
+
+        mDb.deleteAll()
+        mDb.save(new)
     }
 }
