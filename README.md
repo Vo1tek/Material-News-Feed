@@ -21,7 +21,7 @@ Domain layer works much more like MVP + Clean Architecture approach. There is an
 Data layer works directly with Android specific tools: network calls, DB queries and stuff like that. So domain layer knows nothing about Android SDK.
 
 ## How To Build Project
-This app uses [News API](https://newsapi.org/) to retrieve data. You must provide your own api key in order to build the app. Paste it to project ```gradle.properties``` as variable named ```ApiKey```.
+This app uses [News API](https://newsapi.org/) to retrieve data. You must provide your own api key in order to build the app. Paste it to project [gradle.properties](https://raw.githubusercontent.com/IvanAntsiferov/News-Feed-App/master/gradle.properties) in variable named ```ApiKey```.
 
 ## Libraries
 
