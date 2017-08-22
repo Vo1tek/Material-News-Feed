@@ -2,8 +2,8 @@ package com.voltek.newsfeed.domain.repository
 
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.data.Provider
 import com.voltek.newsfeed.data.network.NewsApi
+import com.voltek.newsfeed.data.platform.ResourcesManager
 import com.voltek.newsfeed.domain.Mapper
 import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.interactor.Result
@@ -18,7 +18,7 @@ class ArticlesRepository {
     lateinit var mApi: NewsApi
 
     @Inject
-    lateinit var mRes: Provider.Platform.Resources
+    lateinit var mRes: ResourcesManager
 
     init {
         NewsApp.repositoryComponent.inject(this)

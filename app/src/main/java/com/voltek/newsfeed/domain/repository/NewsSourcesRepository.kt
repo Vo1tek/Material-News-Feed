@@ -2,9 +2,10 @@ package com.voltek.newsfeed.domain.repository
 
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.data.Provider
 import com.voltek.newsfeed.data.entity.SourceRAW
 import com.voltek.newsfeed.data.network.NewsApi
+import com.voltek.newsfeed.data.platform.ResourcesManager
+import com.voltek.newsfeed.data.storage.NewsSourcesStorage
 import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.Mapper
 import com.voltek.newsfeed.presentation.entity.SourceUI
@@ -21,10 +22,10 @@ class NewsSourcesRepository {
     lateinit var mApi: NewsApi
 
     @Inject
-    lateinit var mDb: Provider.Storage.NewsSources
+    lateinit var mDb: NewsSourcesStorage
 
     @Inject
-    lateinit var mRes: Provider.Platform.Resources
+    lateinit var mRes: ResourcesManager
 
     // Notifies subscribers when enabled news sources has changed
     private var mSourcesEnabledSubject: PublishSubject<Unit> = PublishSubject.create()

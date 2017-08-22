@@ -1,6 +1,5 @@
 package com.voltek.newsfeed.dagger.module
 
-import com.voltek.newsfeed.data.Provider
 import com.voltek.newsfeed.data.storage.NewsSourcesStorage
 import dagger.Module
 import dagger.Provides
@@ -9,5 +8,5 @@ import dagger.Provides
 class StorageModule {
 
     @Provides
-    fun provideNewsSourcesStorage(): Provider.Storage.NewsSources = NewsSourcesStorage()
+    fun provideNewsSourcesStorage(): NewsSourcesStorage = NewsSourcesStorage()
 }
