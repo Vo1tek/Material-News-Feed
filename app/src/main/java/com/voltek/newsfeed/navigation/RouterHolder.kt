@@ -13,11 +13,11 @@ import java.util.concurrent.CopyOnWriteArrayList
  */
 class RouterHolder : Router, NavigatorBinder {
 
-    val commandsFeed: PublishSubject<Command> = PublishSubject.create()
+    private val commandsFeed: PublishSubject<Command> = PublishSubject.create()
 
     private var navigator: Navigator? = null
 
-    private var commandsQueue: CopyOnWriteArrayList<Command> = CopyOnWriteArrayList()
+    val commandsQueue: CopyOnWriteArrayList<Command> = CopyOnWriteArrayList()
 
     init {
         subscribeToCommandsFeed()
