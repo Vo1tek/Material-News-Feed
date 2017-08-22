@@ -55,22 +55,10 @@ class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
 
     init {
         NewsApp.presenterComponent.inject(this)
+
+        bind(arrayOf(mNewsSources, mNewsSourceEnable))
+
         loadNewsSources(NewsSourcesInteractor.GET)
-    }
-
-    override fun attachView(view: NewsSourcesView?) {
-        super.attachView(view)
-        viewState.attachInputListeners()
-    }
-
-    override fun detachView(view: NewsSourcesView?) {
-        viewState.detachInputListeners()
-        super.detachView(view)
-    }
-
-    override fun onDestroy() {
-        mNewsSources.unsubscribe()
-        mNewsSourceEnable.unsubscribe()
     }
 
     private fun loadNewsSources(filter: String) {

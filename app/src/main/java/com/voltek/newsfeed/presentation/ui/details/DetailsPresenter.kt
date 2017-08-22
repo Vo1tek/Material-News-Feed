@@ -47,14 +47,4 @@ class DetailsPresenter(private val article: ArticleUI) : BasePresenter<DetailsVi
             mModel.update()
         }
     }
-
-    override fun attachView(view: DetailsView?) {
-        super.attachView(view)
-        viewState.attachInputListeners()
-    }
-
-    override fun detachView(view: DetailsView?) {
-        viewState.detachInputListeners()
-        super.detachView(view)
-    }
 }

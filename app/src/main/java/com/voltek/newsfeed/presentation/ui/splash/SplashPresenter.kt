@@ -30,11 +30,9 @@ class SplashPresenter : BasePresenter<SplashView>() {
     init {
         NewsApp.presenterComponent.inject(this)
 
-        checkNewsSources()
-    }
+        bind(arrayOf(mNewsSources))
 
-    override fun onDestroy() {
-        mNewsSources.unsubscribe()
+        checkNewsSources()
     }
 
     private fun checkNewsSources() {

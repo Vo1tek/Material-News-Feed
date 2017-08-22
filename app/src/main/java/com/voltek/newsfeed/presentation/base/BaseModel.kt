@@ -5,7 +5,7 @@ package com.voltek.newsfeed.presentation.base
  *
  * @param subscriber function, that will be called when model updates
  */
-abstract class BaseModel(val subscriber: (BaseModel) -> Unit) {
+abstract class BaseModel(private val subscriber: (BaseModel) -> Unit) {
 
     /**
      * Call this method to render new model state

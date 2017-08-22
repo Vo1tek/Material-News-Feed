@@ -47,6 +47,8 @@ class ListPresenter : BasePresenter<ListView>() {
     init {
         NewsApp.presenterComponent.inject(this)
 
+        bind(arrayOf(mArticles, mNewsSourcesChanges))
+
         listenForChanges()
 
         loadArticles()
@@ -54,18 +56,7 @@ class ListPresenter : BasePresenter<ListView>() {
 
     override fun attachView(view: ListView?) {
         super.attachView(view)
-        viewState.attachInputListeners()
         mModel.scrollToTop = false
-    }
-
-    override fun detachView(view: ListView?) {
-        viewState.detachInputListeners()
-        super.detachView(view)
-    }
-
-    override fun onDestroy() {
-        mArticles.unsubscribe()
-        mNewsSourcesChanges.unsubscribe()
     }
 
     private fun loadArticles() {
