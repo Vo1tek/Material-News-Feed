@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation.news_sources
+package com.voltek.newsfeed.presentation.ui.news_sources
 
 import android.content.Context
 import android.support.annotation.IdRes
@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.domain.entity.SourceUI
+import com.voltek.newsfeed.presentation.entity.SourceUI
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_source.view.*

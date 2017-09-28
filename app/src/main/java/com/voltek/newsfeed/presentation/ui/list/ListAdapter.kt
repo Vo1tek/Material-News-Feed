@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation.list
+package com.voltek.newsfeed.presentation.ui.list
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.item_title.view.*
 import android.view.animation.AnimationUtils
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.target.Target
-import com.voltek.newsfeed.domain.entity.ArticleUI
+import com.voltek.newsfeed.presentation.entity.ArticleUI
 import java.lang.Exception
 
 class ListAdapter(private val mContext: Context, private var mItems: MutableList<ArticleUI>)

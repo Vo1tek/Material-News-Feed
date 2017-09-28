@@ -1,7 +1,7 @@
 package com.voltek.newsfeed.domain.interactor.articles
 
 import com.voltek.newsfeed.NewsApp
-import com.voltek.newsfeed.domain.entity.ArticleUI
+import com.voltek.newsfeed.presentation.entity.ArticleUI
 import com.voltek.newsfeed.domain.interactor.BaseInteractor
 import com.voltek.newsfeed.domain.interactor.Parameter
 import com.voltek.newsfeed.domain.interactor.Result

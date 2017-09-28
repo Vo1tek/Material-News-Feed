@@ -4,11 +4,11 @@ import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.data.Provider
 import com.voltek.newsfeed.data.network.NewsApi
-import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.Mapper
-import com.voltek.newsfeed.domain.entity.ArticleUI
-import com.voltek.newsfeed.domain.entity.SourceUI
+import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.interactor.Result
+import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.presentation.entity.SourceUI
 import io.reactivex.Observable
 import javax.inject.Inject
 

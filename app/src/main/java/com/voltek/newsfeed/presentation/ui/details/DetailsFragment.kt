@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation.details
+package com.voltek.newsfeed.presentation.ui.details
 
 import android.os.Bundle
 import android.view.*
@@ -8,10 +8,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.domain.entity.ArticleUI
-import com.voltek.newsfeed.presentation.BaseFragment
-import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.details.DetailsContract.DetailsView
+import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.presentation.base.BaseFragment
+import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.parceler.Parcels

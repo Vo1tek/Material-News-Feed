@@ -2,8 +2,8 @@ package com.voltek.newsfeed.domain
 
 import com.voltek.newsfeed.data.entity.ArticleRAW
 import com.voltek.newsfeed.data.entity.SourceRAW
-import com.voltek.newsfeed.domain.entity.ArticleUI
-import com.voltek.newsfeed.domain.entity.SourceUI
+import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.presentation.entity.SourceUI
 
 object Mapper {
 

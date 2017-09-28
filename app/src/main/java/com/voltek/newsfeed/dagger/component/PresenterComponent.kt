@@ -2,10 +2,10 @@ package com.voltek.newsfeed.dagger.component
 
 import com.voltek.newsfeed.dagger.module.InteractorModule
 import com.voltek.newsfeed.dagger.module.RouterModule
-import com.voltek.newsfeed.presentation.details.DetailsPresenter
-import com.voltek.newsfeed.presentation.list.ListPresenter
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesPresenter
-import com.voltek.newsfeed.presentation.splash.SplashPresenter
+import com.voltek.newsfeed.presentation.ui.details.DetailsPresenter
+import com.voltek.newsfeed.presentation.ui.list.ListPresenter
+import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesPresenter
+import com.voltek.newsfeed.presentation.ui.splash.SplashPresenter
 import dagger.Component
 import javax.inject.Singleton
 

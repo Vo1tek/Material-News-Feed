@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation.list
+package com.voltek.newsfeed.presentation.ui.list
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -11,10 +11,10 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.presentation.BaseFragment
-import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.list.ListContract.ListModel
-import com.voltek.newsfeed.presentation.list.ListContract.ListView
+import com.voltek.newsfeed.presentation.base.BaseFragment
+import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.ui.list.ListContract.ListModel
+import com.voltek.newsfeed.presentation.ui.list.ListContract.ListView
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.*

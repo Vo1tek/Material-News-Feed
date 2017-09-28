@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.domain.entity
+package com.voltek.newsfeed.presentation.entity
 
 data class SourceUI(
         val id: String,

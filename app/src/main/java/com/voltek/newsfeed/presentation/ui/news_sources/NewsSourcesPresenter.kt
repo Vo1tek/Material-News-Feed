@@ -1,14 +1,14 @@
-package com.voltek.newsfeed.presentation.news_sources
+package com.voltek.newsfeed.presentation.ui.news_sources
 
 import com.arellomobile.mvp.InjectViewState
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.domain.interactor.Parameter
 import com.voltek.newsfeed.domain.interactor.news_sources.EnableNewsSourceInteractor
 import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
-import com.voltek.newsfeed.presentation.BasePresenter
-import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesContract.NewsSourcesModel
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesContract.NewsSourcesView
+import com.voltek.newsfeed.presentation.base.BasePresenter
+import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesModel
+import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesView
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import javax.inject.Inject

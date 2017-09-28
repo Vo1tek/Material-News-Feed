@@ -7,7 +7,7 @@ import com.voltek.newsfeed.data.entity.SourceRAW
 import com.voltek.newsfeed.data.network.NewsApi
 import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.Mapper
-import com.voltek.newsfeed.domain.entity.SourceUI
+import com.voltek.newsfeed.presentation.entity.SourceUI
 import com.voltek.newsfeed.domain.interactor.Result
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -100,34 +100,6 @@ class NewsSourcesRepository {
                     .flatMap {
                         Single.fromCallable { Result(mDb.queryAll().map { Mapper.Source(it) }) }
                     }
-
-
-    /*Observable.create {
-val emitter = it
-
-
-        .subscribe({
-            val current = mDb.queryEnabled()
-            val new = it as ArrayList
-
-            for (source in new)
-                for (enabled in current)
-                    if (source.id == enabled.id)
-                        source.isEnabled = true
-
-            mDb.deleteAll()
-            mDb.save(new)
-            emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }))
-        }, {
-            val message: String = when (it) {
-                is NoConnectionException -> mRes.getString(R.string.error_no_connection)
-                else -> mRes.getString(R.string.error_request_failed)
-            }
-            emitter.onNext(Result(mDb.queryAll().map { Mapper.Source(it) }, message))
-        })
-
-emitter.onComplete()
-}*/
 
     fun update(id: String, isEnabled: Boolean): Completable = Completable.create {
         val emitter = it

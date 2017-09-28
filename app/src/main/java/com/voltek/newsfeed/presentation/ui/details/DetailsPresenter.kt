@@ -1,16 +1,16 @@
-package com.voltek.newsfeed.presentation.details
+package com.voltek.newsfeed.presentation.ui.details
 
 import com.arellomobile.mvp.InjectViewState
 import com.voltek.newsfeed.NewsApp
-import com.voltek.newsfeed.domain.entity.ArticleUI
+import com.voltek.newsfeed.presentation.entity.ArticleUI
 import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
 import com.voltek.newsfeed.navigation.command.CommandShareArticle
 import com.voltek.newsfeed.navigation.proxy.Router
-import com.voltek.newsfeed.presentation.BasePresenter
-import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.details.DetailsContract.DetailsModel
-import com.voltek.newsfeed.presentation.details.DetailsContract.DetailsView
+import com.voltek.newsfeed.presentation.base.BasePresenter
+import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsModel
+import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 import javax.inject.Inject
 
 @InjectViewState

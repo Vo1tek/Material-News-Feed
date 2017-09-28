@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation.list
+package com.voltek.newsfeed.presentation.ui.list
 
 import com.arellomobile.mvp.InjectViewState
 import com.voltek.newsfeed.NewsApp
@@ -8,10 +8,10 @@ import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesUpdatesInte
 import com.voltek.newsfeed.navigation.command.CommandOpenArticleDetailsScreen
 import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.navigation.proxy.Router
-import com.voltek.newsfeed.presentation.BasePresenter
-import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.list.ListContract.ListModel
-import com.voltek.newsfeed.presentation.list.ListContract.ListView
+import com.voltek.newsfeed.presentation.base.BasePresenter
+import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.ui.list.ListContract.ListModel
+import com.voltek.newsfeed.presentation.ui.list.ListContract.ListView
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import javax.inject.Inject

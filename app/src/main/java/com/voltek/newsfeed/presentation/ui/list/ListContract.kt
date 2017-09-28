@@ -1,10 +1,10 @@
-package com.voltek.newsfeed.presentation.list
+package com.voltek.newsfeed.presentation.ui.list
 
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import com.voltek.newsfeed.domain.entity.ArticleUI
-import com.voltek.newsfeed.presentation.BaseModel
-import com.voltek.newsfeed.presentation.BaseView
+import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.presentation.base.BaseModel
+import com.voltek.newsfeed.presentation.base.BaseView
 
 object ListContract {
 

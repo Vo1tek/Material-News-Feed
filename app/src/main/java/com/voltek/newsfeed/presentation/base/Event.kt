@@ -1,7 +1,7 @@
-package com.voltek.newsfeed.presentation
+package com.voltek.newsfeed.presentation.base
 
-import com.voltek.newsfeed.domain.entity.ArticleUI
-import com.voltek.newsfeed.domain.entity.SourceUI
+import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.presentation.entity.SourceUI
 
 /**
  * UI input events

@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation.news_sources
+package com.voltek.newsfeed.presentation.ui.news_sources
 
 import android.os.Bundle
 import android.support.annotation.IdRes
@@ -7,9 +7,9 @@ import android.view.*
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.presentation.BaseFragment
-import com.voltek.newsfeed.presentation.Event
-import com.voltek.newsfeed.presentation.news_sources.NewsSourcesContract.NewsSourcesView
+import com.voltek.newsfeed.presentation.base.BaseFragment
+import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesView
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.*

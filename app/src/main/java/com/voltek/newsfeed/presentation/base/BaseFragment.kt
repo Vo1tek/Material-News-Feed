@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.presentation
+package com.voltek.newsfeed.presentation.base
 
 import android.support.annotation.StringRes
 import android.widget.Toast
