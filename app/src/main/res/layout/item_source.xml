@@ -16,7 +16,7 @@
         android:id="@+id/cb_enable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:clickable="false"
@@ -47,8 +47,9 @@
         android:id="@+id/im_country"
         android:layout_width="@dimen/country_icon_size"
         android:layout_height="@dimen/country_icon_size"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@id/tv_description"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:contentDescription="@null" />
 
 </RelativeLayout>

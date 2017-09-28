@@ -12,6 +12,7 @@
         android:layout_height="@dimen/item_article_image_height"
         android:layout_marginBottom="@dimen/generic_padding_small"
         android:adjustViewBounds="true"
+        android:contentDescription="@null"
         android:scaleType="centerCrop" />
 
     <TextView
