@@ -2,6 +2,7 @@ package com.voltek.newsfeed.presentation.ui.news_sources
 
 import android.content.Context
 import android.support.annotation.IdRes
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.entity.SourceUI
+import com.voltek.newsfeed.utils.SourceDiffCallback
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_source.view.*
@@ -64,16 +66,12 @@ class NewsSourcesAdapter(private val mContext: Context, private var mItems: Muta
     override fun getItemCount(): Int = mItems.size
 
     fun replace(items: List<SourceUI>) {
-        val currentSize = mItems.size
-        val newSize = items.size
+        val diffCallback = SourceDiffCallback(mItems, items)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        if (currentSize == 0 && newSize > 0) {
-            mItems.addAll(items)
-            notifyItemRangeInserted(0, newSize)
-        } else if (currentSize > 0 && newSize == 0) {
-            mItems.clear()
-            notifyDataSetChanged()
-        }
+        this.mItems.clear()
+        this.mItems.addAll(items)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     private fun loadImage(imageView: ImageView, @IdRes resId: Int) {
