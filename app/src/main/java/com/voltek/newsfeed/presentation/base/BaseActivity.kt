@@ -9,12 +9,12 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.voltek.newsfeed.utils.SubscriptionsHolder
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
-import com.voltek.newsfeed.navigation.proxy.Navigator
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenWebsite
+import com.voltek.newsfeed.presentation.navigation.proxy.Navigator
 import io.reactivex.disposables.CompositeDisposable
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import android.widget.Toast
-import com.voltek.newsfeed.navigation.command.CommandShareArticle
+import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
 
 abstract class BaseActivity : MvpAppCompatActivity(),
         Navigator,

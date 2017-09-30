@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.navigation.proxy
+package com.voltek.newsfeed.presentation.navigation.proxy
 
 /**
  * Implement this interface in class, that handles app navigation (usually activity class)

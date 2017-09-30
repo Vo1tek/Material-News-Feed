@@ -1,10 +1,10 @@
-package com.voltek.newsfeed.navigation
+package com.voltek.newsfeed.presentation.navigation
 
-import com.voltek.newsfeed.navigation.command.*
-import com.voltek.newsfeed.navigation.proxy.Command
-import com.voltek.newsfeed.navigation.proxy.Navigator
-import com.voltek.newsfeed.navigation.proxy.NavigatorBinder
-import com.voltek.newsfeed.navigation.proxy.Router
+import com.voltek.newsfeed.presentation.navigation.command.*
+import com.voltek.newsfeed.presentation.navigation.proxy.Command
+import com.voltek.newsfeed.presentation.navigation.proxy.Navigator
+import com.voltek.newsfeed.presentation.navigation.proxy.NavigatorBinder
+import com.voltek.newsfeed.presentation.navigation.proxy.Router
 import org.junit.Before
 import org.junit.Test
 import junit.framework.Assert.assertEquals

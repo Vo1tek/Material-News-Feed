@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.navigation.proxy
+package com.voltek.newsfeed.presentation.navigation.proxy
 
 /**
  * Entry point for navigation commands.

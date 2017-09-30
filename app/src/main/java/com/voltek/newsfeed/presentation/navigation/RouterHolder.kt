@@ -1,7 +1,7 @@
-package com.voltek.newsfeed.navigation
+package com.voltek.newsfeed.presentation.navigation
 
-import com.voltek.newsfeed.navigation.command.CommandNavigatorAttached
-import com.voltek.newsfeed.navigation.proxy.*
+import com.voltek.newsfeed.presentation.navigation.command.CommandNavigatorAttached
+import com.voltek.newsfeed.presentation.navigation.proxy.*
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.CopyOnWriteArrayList
 

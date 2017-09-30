@@ -6,10 +6,10 @@ import com.voltek.newsfeed.domain.exception.NoNewsSourcesSelectedException
 import com.voltek.newsfeed.presentation.entity.SourceUI
 import com.voltek.newsfeed.domain.interactor.Parameter
 import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
-import com.voltek.newsfeed.navigation.command.CommandOpenArticlesListScreen
-import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
-import com.voltek.newsfeed.navigation.command.CommandSystemMessage
-import com.voltek.newsfeed.navigation.proxy.Router
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticlesListScreen
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
+import com.voltek.newsfeed.presentation.navigation.command.CommandSystemMessage
+import com.voltek.newsfeed.presentation.navigation.proxy.Router
 import com.voltek.newsfeed.presentation.base.BasePresenter
 import com.voltek.newsfeed.presentation.base.Event
 import io.reactivex.functions.Action

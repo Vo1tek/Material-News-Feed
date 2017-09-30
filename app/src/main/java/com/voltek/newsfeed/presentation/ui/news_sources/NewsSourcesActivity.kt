@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.domain.exception.NoNewsSourcesSelectedException
-import com.voltek.newsfeed.navigation.command.CommandSystemMessage
-import com.voltek.newsfeed.navigation.proxy.Command
+import com.voltek.newsfeed.presentation.navigation.command.CommandSystemMessage
+import com.voltek.newsfeed.presentation.navigation.proxy.Command
 import com.voltek.newsfeed.presentation.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_generic.*
 

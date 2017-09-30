@@ -2,9 +2,9 @@ package com.voltek.newsfeed.presentation.ui.splash
 
 import android.content.Intent
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.voltek.newsfeed.navigation.command.CommandOpenArticlesListScreen
-import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
-import com.voltek.newsfeed.navigation.proxy.Command
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticlesListScreen
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
+import com.voltek.newsfeed.presentation.navigation.proxy.Command
 import com.voltek.newsfeed.presentation.base.BaseActivity
 import com.voltek.newsfeed.presentation.ui.list.ListActivity
 import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesActivity

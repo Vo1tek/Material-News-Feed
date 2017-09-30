@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.navigation.proxy
+package com.voltek.newsfeed.presentation.navigation.proxy
 
 /**
  * Basic class for navigation commands. Extend from it and add any properties, that you need.

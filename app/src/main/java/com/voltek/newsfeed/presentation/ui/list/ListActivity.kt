@@ -3,12 +3,12 @@ package com.voltek.newsfeed.presentation.ui.list
 import android.content.Intent
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.entity.ArticleUI
-import com.voltek.newsfeed.navigation.command.CommandOpenArticleDetailsScreen
-import com.voltek.newsfeed.navigation.command.CommandOpenNewsSourcesScreen
-import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
-import com.voltek.newsfeed.navigation.proxy.Command
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticleDetailsScreen
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenWebsite
+import com.voltek.newsfeed.presentation.navigation.proxy.Command
 import com.voltek.newsfeed.presentation.base.BaseActivity
-import com.voltek.newsfeed.navigation.command.CommandShareArticle
+import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
 import com.voltek.newsfeed.presentation.ui.details.DetailsActivity
 import com.voltek.newsfeed.presentation.ui.details.DetailsFragment
 import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesActivity

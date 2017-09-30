@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.navigation.proxy
+package com.voltek.newsfeed.presentation.navigation.proxy
 
 /**
  * Class, that implements navigator, calls setNavigator when ready to perform in-app navigation.

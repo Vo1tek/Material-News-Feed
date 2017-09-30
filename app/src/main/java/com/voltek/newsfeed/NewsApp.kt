@@ -5,8 +5,8 @@ import com.orhanobut.hawk.Hawk
 import com.voltek.newsfeed.dagger.component.*
 import com.voltek.newsfeed.dagger.module.*
 import com.voltek.newsfeed.data.network.BASE_URL
-import com.voltek.newsfeed.navigation.RouterHolder
-import com.voltek.newsfeed.navigation.proxy.NavigatorBinder
+import com.voltek.newsfeed.presentation.navigation.RouterHolder
+import com.voltek.newsfeed.presentation.navigation.proxy.NavigatorBinder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm

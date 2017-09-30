@@ -3,9 +3,9 @@ package com.voltek.newsfeed.presentation.ui.details
 import android.os.Bundle
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.entity.ArticleUI
-import com.voltek.newsfeed.navigation.command.CommandOpenWebsite
-import com.voltek.newsfeed.navigation.command.CommandShareArticle
-import com.voltek.newsfeed.navigation.proxy.Command
+import com.voltek.newsfeed.presentation.navigation.command.CommandOpenWebsite
+import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
+import com.voltek.newsfeed.presentation.navigation.proxy.Command
 import com.voltek.newsfeed.presentation.base.BaseActivity
 import org.parceler.Parcels
 

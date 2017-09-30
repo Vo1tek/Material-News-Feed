@@ -1,7 +1,7 @@
 package com.voltek.newsfeed.dagger.module
 
-import com.voltek.newsfeed.navigation.RouterHolder
-import com.voltek.newsfeed.navigation.proxy.Router
+import com.voltek.newsfeed.presentation.navigation.RouterHolder
+import com.voltek.newsfeed.presentation.navigation.proxy.Router
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
