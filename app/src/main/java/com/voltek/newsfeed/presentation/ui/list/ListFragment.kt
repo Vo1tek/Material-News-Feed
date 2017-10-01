@@ -6,8 +6,10 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
+import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
@@ -17,6 +19,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 class ListFragment : BaseFragment(),
         ListView {
@@ -28,23 +31,28 @@ class ListFragment : BaseFragment(),
     }
 
     init {
+        NewsApp.appComponent.inject(this)
         setHasOptionsMenu(true)
     }
 
+    @Inject
     @InjectPresenter
-    lateinit var mPresenter: ListPresenter
+    lateinit var presenter: ListPresenter
 
-    private lateinit var mAdapter: ListAdapter
+    @ProvidePresenter
+    fun providePresenter() = presenter
+
+    private lateinit var adapter: ListAdapter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mAdapter = ListAdapter(context, ArrayList())
+        adapter = ListAdapter(context, ArrayList())
         return inflater?.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         recycler_view.hasFixedSize()
         recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.adapter = ScaleInAnimationAdapter(mAdapter)
+        recycler_view.adapter = ScaleInAnimationAdapter(adapter)
         recycler_view.itemAnimator = SlideInLeftAnimator()
     }
 
@@ -57,20 +65,20 @@ class ListFragment : BaseFragment(),
         RxToolbar.itemClicks(activity.toolbar)
                 .subscribe({
                     when (it.itemId) {
-                        R.id.action_news_sources -> mPresenter.notify(Event.OpenNewsSources())
+                        R.id.action_news_sources -> presenter.notify(Event.OpenNewsSources())
                     }
                 })
                 .bind()
 
         // On article click
-        mAdapter.getOnItemClickObservable()
+        adapter.getOnItemClickObservable()
                 .distinctUntilChanged() // Skip reopening of details in two pane mode
-                .subscribe({ mPresenter.notify(Event.OpenArticleDetails(it)) })
+                .subscribe({ presenter.notify(Event.OpenArticleDetails(it)) })
                 .bind()
 
         // Swipe to refresh
         RxSwipeRefreshLayout.refreshes(swipe_container)
-                .subscribe({ mPresenter.notify(Event.Refresh()) })
+                .subscribe({ presenter.notify(Event.Refresh()) })
                 .bind()
     }
 
@@ -81,7 +89,7 @@ class ListFragment : BaseFragment(),
     override fun render(model: ListModel) {
         swipe_container.isRefreshing = model.loading
 
-        mAdapter.replace(model.articles)
+        adapter.replace(model.articles)
 
         if (!model.message.isEmpty()) {
             if (model.articles.isEmpty()) {

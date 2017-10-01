@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.dagger.module
+package com.voltek.newsfeed.dagger
 
 import android.content.Context
 import com.voltek.newsfeed.NewsApp

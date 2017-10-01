@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.dagger.module
+package com.voltek.newsfeed.dagger
 
 import android.content.Context
 import com.voltek.newsfeed.data.network.BaseInterceptor
@@ -12,8 +12,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(AppModule::class))
-class NetworkModule(val baseUrl: String) {
+@Module
+class NetworkModule(private val baseUrl: String) {
 
     @Provides
     @Singleton

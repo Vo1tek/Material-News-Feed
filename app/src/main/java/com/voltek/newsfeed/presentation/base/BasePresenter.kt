@@ -5,7 +5,7 @@ import com.voltek.newsfeed.domain.use_case.BaseUseCase
 
 abstract class BasePresenter<View : BaseView> : MvpPresenter<View>() {
 
-    private val interactors = ArrayList<BaseUseCase<*, *>>()
+    private val useCases = ArrayList<BaseUseCase<*, *>>()
 
     abstract fun notify(event: Event)
 
@@ -20,10 +20,10 @@ abstract class BasePresenter<View : BaseView> : MvpPresenter<View>() {
     }
 
     override fun onDestroy() {
-        for (interactor in interactors)
-            interactor.unsubscribe()
+        for (useCase in useCases)
+            useCase.unsubscribe()
     }
 
     protected fun bind(useCases: Array<BaseUseCase<*, *>>) =
-            this.interactors.addAll(useCases)
+            this.useCases.addAll(useCases)
 }

@@ -1,53 +1,50 @@
 package com.voltek.newsfeed.presentation.ui.details
 
 import com.arellomobile.mvp.InjectViewState
-import com.voltek.newsfeed.NewsApp
+import com.voltek.newsfeed.presentation.base.BasePresenter
+import com.voltek.newsfeed.presentation.base.Event
 import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.presentation.navigation.command.CommandBack
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenWebsite
 import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
 import com.voltek.newsfeed.presentation.navigation.proxy.Router
-import com.voltek.newsfeed.presentation.base.BasePresenter
-import com.voltek.newsfeed.presentation.base.Event
-import com.voltek.newsfeed.presentation.navigation.command.CommandBack
 import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsModel
 import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
-import javax.inject.Inject
 
 @InjectViewState
-class DetailsPresenter(private val article: ArticleUI) : BasePresenter<DetailsView>() {
+class DetailsPresenter(private val router: Router) : BasePresenter<DetailsView>() {
 
-    @Inject
-    lateinit var mRouter: Router
+    private val model: DetailsModel = DetailsModel { viewState.render(it as DetailsModel) }
 
-    private val mModel: DetailsModel = DetailsModel { viewState.render(it as DetailsModel) }
+    lateinit private var article: ArticleUI
 
     override fun notify(event: Event) {
         when (event) {
             is Event.Share -> {
                 if (!article.isEmpty()) {
-                    mRouter.execute(CommandShareArticle(article.title ?: "", article.url ?: ""))
+                    router.execute(CommandShareArticle(article.title ?: "", article.url ?: ""))
                 }
             }
-            is Event.OpenWebsite -> mRouter.execute(CommandOpenWebsite(article.url ?: ""))
-            is Event.OpenNewsSources -> mRouter.execute(CommandOpenNewsSourcesScreen())
-            is Event.Back -> mRouter.execute(CommandBack())
+            is Event.OpenWebsite -> router.execute(CommandOpenWebsite(article.url ?: ""))
+            is Event.OpenNewsSources -> router.execute(CommandOpenNewsSourcesScreen())
+            is Event.Back -> router.execute(CommandBack())
         }
     }
 
-    init {
-        NewsApp.presenterComponent.inject(this)
+    fun setArticle(articleUI: ArticleUI) {
+        article = articleUI
 
         if (article.isEmpty()) {
-            mModel.articleLoaded = false
-            mModel.update()
+            model.articleLoaded = false
+            model.update()
         } else {
-            mModel.articleLoaded = true
-            mModel.description = article.description ?: ""
-            mModel.title = article.title ?: ""
-            mModel.urlToImage = article.urlToImage ?: ""
-            mModel.source = article.source
-            mModel.update()
+            model.articleLoaded = true
+            model.description = article.description ?: ""
+            model.title = article.title ?: ""
+            model.urlToImage = article.urlToImage ?: ""
+            model.source = article.source
+            model.update()
         }
     }
 }

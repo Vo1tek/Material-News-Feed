@@ -1,79 +1,68 @@
 package com.voltek.newsfeed.presentation.ui.list
 
 import com.arellomobile.mvp.InjectViewState
-import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.domain.use_case.Parameter
 import com.voltek.newsfeed.domain.use_case.articles.GetArticlesUseCase
 import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUpdatesUseCase
+import com.voltek.newsfeed.presentation.base.BasePresenter
+import com.voltek.newsfeed.presentation.base.Event
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticleDetailsScreen
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.presentation.navigation.proxy.Router
-import com.voltek.newsfeed.presentation.base.BasePresenter
-import com.voltek.newsfeed.presentation.base.Event
 import com.voltek.newsfeed.presentation.ui.list.ListContract.ListModel
 import com.voltek.newsfeed.presentation.ui.list.ListContract.ListView
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
-import javax.inject.Inject
 
 @InjectViewState
-class ListPresenter : BasePresenter<ListView>() {
-
-    @Inject
-    lateinit var mRouter: Router
-
-    @Inject
-    lateinit var mArticles: GetArticlesUseCase
-
-    @Inject
-    lateinit var mNewsSourcesChanges: NewsSourcesUpdatesUseCase
+class ListPresenter(
+        private val router: Router,
+        private val articles: GetArticlesUseCase,
+        private val newsSourcesChanges: NewsSourcesUpdatesUseCase
+) : BasePresenter<ListView>() {
 
     // Holds current model through full presenter lifecycle
-    private val mModel: ListModel = ListModel { viewState.render(it as ListModel) }
+    private val model: ListModel = ListModel { viewState.render(it as ListModel) }
+
+    init {
+        bind(arrayOf(articles, newsSourcesChanges))
+        listenForChanges()
+        loadArticles()
+    }
 
     // View notify presenter about events using this method
     override fun notify(event: Event) {
         when (event) {
-            is Event.OpenArticleDetails -> mRouter.execute(CommandOpenArticleDetailsScreen(event.article))
-            is Event.OpenNewsSources -> mRouter.execute(CommandOpenNewsSourcesScreen())
+            is Event.OpenArticleDetails -> router.execute(CommandOpenArticleDetailsScreen(event.article))
+            is Event.OpenNewsSources -> router.execute(CommandOpenNewsSourcesScreen())
             is Event.Refresh -> {
-                if (!mModel.loading) {
+                if (!model.loading) {
                     loadArticles()
                 }
             }
         }
     }
 
-    init {
-        NewsApp.presenterComponent.inject(this)
-
-        bind(arrayOf(mArticles, mNewsSourcesChanges))
-
-        listenForChanges()
-
-        loadArticles()
-    }
-
     override fun attachView(view: ListView?) {
         super.attachView(view)
-        mModel.scrollToTop = false
+        model.scrollToTop = false
     }
 
     private fun loadArticles() {
-        mModel.articles.clear()
-        mModel.loading = true
-        mModel.message = ""
-        mModel.update()
+        model.articles.clear()
+        model.loading = true
+        model.message = ""
+        model.update()
 
-        mArticles.execute(
+        articles.execute(
                 Parameter(),
                 Consumer {
-                    mModel.addData(it.data)
-                    mModel.message = it.message
-                    mModel.update()
+                    model.addData(it.data)
+                    model.message = it.message
+                    model.update()
                 },
                 Consumer {
-                    mModel.message = it.message ?: ""
+                    model.message = it.message ?: ""
                     finishLoading()
                 },
                 Action {
@@ -84,10 +73,10 @@ class ListPresenter : BasePresenter<ListView>() {
 
     private fun listenForChanges() {
         // Listen for enabled news sources changes and reload articles when it happens.
-        mNewsSourcesChanges.execute(
+        newsSourcesChanges.execute(
                 Parameter(),
                 Consumer {
-                    mModel.scrollToTop = true
+                    model.scrollToTop = true
                     loadArticles()
                 },
                 Consumer {
@@ -98,7 +87,7 @@ class ListPresenter : BasePresenter<ListView>() {
     }
 
     private fun finishLoading() {
-        mModel.loading = false
-        mModel.update()
+        model.loading = false
+        model.update()
     }
 }

@@ -1,32 +1,23 @@
 package com.voltek.newsfeed.domain.use_case.articles
 
-import com.voltek.newsfeed.NewsApp
-import com.voltek.newsfeed.presentation.entity.ArticleUI
+import com.voltek.newsfeed.domain.repository.ArticlesRepository
+import com.voltek.newsfeed.domain.repository.NewsSourcesRepository
 import com.voltek.newsfeed.domain.use_case.BaseUseCase
 import com.voltek.newsfeed.domain.use_case.Parameter
 import com.voltek.newsfeed.domain.use_case.Result
-import com.voltek.newsfeed.domain.repository.ArticlesRepository
-import com.voltek.newsfeed.domain.repository.NewsSourcesRepository
+import com.voltek.newsfeed.presentation.entity.ArticleUI
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import javax.inject.Inject
 
-class GetArticlesUseCase constructor(jobScheduler: Scheduler, uiScheduler: Scheduler)
-    : BaseUseCase<List<ArticleUI>?, ArticleUI>(jobScheduler, uiScheduler) {
-
-    @Inject
-    lateinit var mArticlesRepo: ArticlesRepository
-
-    @Inject
-    lateinit var mNewsSourcesRepo: NewsSourcesRepository
-
-    init {
-        NewsApp.interactorComponent.inject(this)
-    }
+class GetArticlesUseCase constructor(
+        private val articlesRepository: ArticlesRepository,
+        private val newsSourcesRepository: NewsSourcesRepository,
+        jobScheduler: Scheduler, uiScheduler: Scheduler
+) : BaseUseCase<List<ArticleUI>?, ArticleUI>(jobScheduler, uiScheduler) {
 
     override fun buildObservable(parameter: Parameter<ArticleUI?>): Observable<Result<List<ArticleUI>?>> =
-            mNewsSourcesRepo
+            newsSourcesRepository
                     .getCategory("")
                     .toObservable()
-                    .flatMap { mArticlesRepo.get(it.data ?: ArrayList()) }
+                    .flatMap { articlesRepository.get(it.data ?: ArrayList()) }
 }

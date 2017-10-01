@@ -1,7 +1,6 @@
 package com.voltek.newsfeed.presentation.ui.news_sources
 
 import com.arellomobile.mvp.InjectViewState
-import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.domain.use_case.Parameter
 import com.voltek.newsfeed.domain.use_case.news_sources.EnableNewsSourceUseCase
 import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUseCase
@@ -11,40 +10,42 @@ import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.News
 import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesView
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
-import javax.inject.Inject
 
 @InjectViewState
-class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
+class NewsSourcesPresenter(
+        private val newsSources: NewsSourcesUseCase,
+        private val newsSourceEnable: EnableNewsSourceUseCase
+) : BasePresenter<NewsSourcesView>() {
 
-    @Inject
-    lateinit var mNewsSources: NewsSourcesUseCase
-
-    @Inject
-    lateinit var mNewsSourceEnable: EnableNewsSourceUseCase
-
-    private val mModel: NewsSourcesModel =
+    private val model: NewsSourcesModel =
             NewsSourcesModel { viewState.render(it as NewsSourcesModel) }
+
+    init {
+        bind(arrayOf(newsSources, newsSourceEnable))
+
+        loadNewsSources(NewsSourcesUseCase.GET)
+    }
 
     override fun notify(event: Event) {
         when (event) {
             is Event.FilterSources -> {
-                mModel.categoryId = event.id
+                model.categoryId = event.id
                 loadNewsSources(event.filter)
             }
             is Event.Refresh -> {
-                mModel.resetId()
+                model.resetId()
                 loadNewsSources(NewsSourcesUseCase.REFRESH)
             }
             is Event.EnableNewsSource -> {
-                mNewsSourceEnable.execute(
+                newsSourceEnable.execute(
                         Parameter(item = event.source),
                         Consumer {},
                         Consumer {
-                            mModel.message = it.message ?: ""
-                            mModel.update()
+                            model.message = it.message ?: ""
+                            model.update()
                         },
                         Action {
-                            mModel.sources.firstOrNull {
+                            model.sources.firstOrNull {
                                 it.id == event.source.id
                             }?.isEnabled = !event.source.isEnabled
                         }
@@ -53,28 +54,20 @@ class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
         }
     }
 
-    init {
-        NewsApp.presenterComponent.inject(this)
-
-        bind(arrayOf(mNewsSources, mNewsSourceEnable))
-
-        loadNewsSources(NewsSourcesUseCase.GET)
-    }
-
     private fun loadNewsSources(filter: String) {
-        mModel.sources.clear()
-        mModel.loading = true
-        mModel.message = ""
-        mModel.update()
+        model.sources.clear()
+        model.loading = true
+        model.message = ""
+        model.update()
 
-        mNewsSources.execute(
+        newsSources.execute(
                 Parameter(filter),
                 Consumer {
-                    mModel.sources = ArrayList(it.data ?: ArrayList())
-                    mModel.message = it.message
+                    model.sources = ArrayList(it.data ?: ArrayList())
+                    model.message = it.message
                 },
                 Consumer {
-                    mModel.message = it.message ?: ""
+                    model.message = it.message ?: ""
                     finishLoading()
                 },
                 Action {
@@ -84,7 +77,7 @@ class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
     }
 
     private fun finishLoading() {
-        mModel.loading = false
-        mModel.update()
+        model.loading = false
+        model.update()
     }
 }

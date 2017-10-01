@@ -2,8 +2,7 @@ package com.voltek.newsfeed
 
 import android.app.Application
 import com.orhanobut.hawk.Hawk
-import com.voltek.newsfeed.dagger.component.*
-import com.voltek.newsfeed.dagger.module.*
+import com.voltek.newsfeed.dagger.*
 import com.voltek.newsfeed.data.network.BASE_URL
 import com.voltek.newsfeed.presentation.navigation.RouterHolder
 import com.voltek.newsfeed.presentation.navigation.proxy.NavigatorBinder
@@ -26,13 +25,7 @@ class NewsApp : Application() {
         fun getNavigatorBinder(): NavigatorBinder = routerHolder
 
         // DI
-        lateinit var presenterComponent: PresenterComponent
-
-        lateinit var interactorComponent: InteractorComponent
-
-        lateinit var repositoryComponent: RepositoryComponent
-
-        lateinit var dataComponent: DataComponent
+        lateinit var appComponent: AppComponent
     }
 
     override fun onCreate() {
@@ -40,34 +33,17 @@ class NewsApp : Application() {
 
         // Dependency injection
         val appModule = AppModule(this)
-        val interactorModule = InteractorModule(
+        val interactorModule = UseCaseModule(
                 AndroidSchedulers.mainThread(),
                 Schedulers.io(),
-                Schedulers.computation()
-        )
+                Schedulers.computation())
         val networkModule = NetworkModule(BASE_URL)
-        val repositoryModule = RepositoryModule()
         val routerModule = RouterModule(routerHolder)
-        val platformModule = PlatformModule()
-        val storageModule = StorageModule()
 
-        presenterComponent = DaggerPresenterComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .routerModule(routerModule)
-                .interactorModule(interactorModule)
-                .build()
-
-        interactorComponent = DaggerInteractorComponent.builder()
-                .repositoryModule(repositoryModule)
-                .build()
-
-        repositoryComponent = DaggerRepositoryComponent.builder()
-                .platformModule(platformModule)
-                .storageModule(storageModule)
+                .useCaseModule(interactorModule)
                 .networkModule(networkModule)
-                .appModule(appModule)
-                .build()
-
-        dataComponent = DaggerDataComponent.builder()
                 .appModule(appModule)
                 .build()
 

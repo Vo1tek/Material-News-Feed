@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.dagger.module
+package com.voltek.newsfeed.dagger
 
 import com.voltek.newsfeed.presentation.navigation.RouterHolder
 import com.voltek.newsfeed.presentation.navigation.proxy.Router
@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RouterModule(val routerHolder: RouterHolder) {
+class RouterModule(private val routerHolder: RouterHolder) {
 
     @Provides
     @Singleton

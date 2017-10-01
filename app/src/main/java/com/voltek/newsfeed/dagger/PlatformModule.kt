@@ -1,5 +1,6 @@
-package com.voltek.newsfeed.dagger.module
+package com.voltek.newsfeed.dagger
 
+import android.content.Context
 import com.voltek.newsfeed.data.platform.ResourcesManager
 import dagger.Module
 import dagger.Provides
@@ -8,5 +9,5 @@ import dagger.Provides
 class PlatformModule {
 
     @Provides
-    fun provideResourcesManager(): ResourcesManager = ResourcesManager()
+    fun provideResourcesManager(context: Context) = ResourcesManager(context)
 }

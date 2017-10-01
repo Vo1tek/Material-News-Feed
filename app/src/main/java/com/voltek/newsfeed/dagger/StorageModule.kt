@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.dagger.module
+package com.voltek.newsfeed.dagger
 
 import com.voltek.newsfeed.data.storage.NewsSourcesStorage
 import dagger.Module

@@ -3,10 +3,10 @@ package com.voltek.newsfeed.presentation.ui.details
 import android.os.Bundle
 import android.view.*
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
+import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
@@ -15,6 +15,7 @@ import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.parceler.Parcels
+import javax.inject.Inject
 
 class DetailsFragment : BaseFragment(),
         DetailsView {
@@ -34,15 +35,16 @@ class DetailsFragment : BaseFragment(),
     }
 
     init {
+        NewsApp.appComponent.inject(this)
         setHasOptionsMenu(true)
     }
 
-    @InjectPresenter(type = PresenterType.LOCAL, tag = TAG)
-    lateinit var mPresenter: DetailsPresenter
+    @Inject
+    @InjectPresenter
+    lateinit var presenter: DetailsPresenter
 
-    @ProvidePresenter(type = PresenterType.LOCAL, tag = TAG)
-    fun providePresenter(): DetailsPresenter =
-            DetailsPresenter(Parcels.unwrap(arguments.getParcelable(ARG_ARTICLE)))
+    @ProvidePresenter
+    fun providePresenter() = presenter
 
     override fun onCreateView(
             inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -53,12 +55,14 @@ class DetailsFragment : BaseFragment(),
     }
 
     override fun attachInputListeners() {
+        presenter.setArticle(Parcels.unwrap(arguments.getParcelable(ARG_ARTICLE)))
+
         RxToolbar.itemClicks(activity.toolbar)
                 .subscribe({
                     when (it.itemId) {
-                        R.id.action_share -> mPresenter.notify(Event.Share())
-                        R.id.action_website -> mPresenter.notify(Event.OpenWebsite())
-                        R.id.action_news_sources -> mPresenter.notify(Event.OpenNewsSources())
+                        R.id.action_share -> presenter.notify(Event.Share())
+                        R.id.action_website -> presenter.notify(Event.OpenWebsite())
+                        R.id.action_news_sources -> presenter.notify(Event.OpenNewsSources())
                     }
                 })
                 .bind()
@@ -66,7 +70,7 @@ class DetailsFragment : BaseFragment(),
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
         android.R.id.home -> {
-            mPresenter.notify(Event.Back())
+            presenter.notify(Event.Back())
             true
         }
         else -> false

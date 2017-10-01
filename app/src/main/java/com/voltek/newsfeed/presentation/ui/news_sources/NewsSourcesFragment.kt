@@ -5,7 +5,9 @@ import android.support.annotation.IdRes
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
+import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
@@ -14,6 +16,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 class NewsSourcesFragment : BaseFragment(),
         NewsSourcesView {
@@ -38,36 +41,44 @@ class NewsSourcesFragment : BaseFragment(),
         fun newInstance(): NewsSourcesFragment = NewsSourcesFragment()
     }
 
+    init {
+        NewsApp.appComponent.inject(this)
+    }
+
+    @Inject
     @InjectPresenter
-    lateinit var mPresenter: NewsSourcesPresenter
+    lateinit var presenter: NewsSourcesPresenter
 
-    private lateinit var mAdapter: NewsSourcesAdapter
+    @ProvidePresenter
+    fun providePresenter() = presenter
 
-    private var mCategory: Int = R.id.action_all
+    private lateinit var adapter: NewsSourcesAdapter
+
+    private var category: Int = R.id.action_all
 
     init {
         setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mAdapter = NewsSourcesAdapter(context, ArrayList())
+        adapter = NewsSourcesAdapter(context, ArrayList())
         return inflater?.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         recycler_view.hasFixedSize()
         recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.adapter = ScaleInAnimationAdapter(mAdapter)
+        recycler_view.adapter = ScaleInAnimationAdapter(adapter)
         recycler_view.itemAnimator = ScaleInLeftAnimator()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_fragment_news_sources, menu)
-        menu?.findItem(mCategory)?.isChecked = true
+        menu?.findItem(category)?.isChecked = true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {
-        menu?.findItem(mCategory)?.isChecked = true
+        menu?.findItem(category)?.isChecked = true
     }
 
     override fun attachInputListeners() {
@@ -77,18 +88,18 @@ class NewsSourcesFragment : BaseFragment(),
                     when (it.itemId) {
                         in CATEGORY_ITEMS_IDS -> {
                             if (!it.isChecked) {
-                                mPresenter.notify(
+                                presenter.notify(
                                         Event.FilterSources(it.title.toString(), it.itemId)
                                 )
                             }
                         }
-                        R.id.action_refresh -> mPresenter.notify(Event.Refresh())
+                        R.id.action_refresh -> presenter.notify(Event.Refresh())
                     }
                 })
                 .bind()
 
-        mAdapter.getOnItemClickObservable()
-                .subscribe({ mPresenter.notify(Event.EnableNewsSource(it)) })
+        adapter.getOnItemClickObservable()
+                .subscribe({ presenter.notify(Event.EnableNewsSource(it)) })
                 .bind()
     }
 
@@ -100,9 +111,9 @@ class NewsSourcesFragment : BaseFragment(),
         swipe_container.isEnabled = model.loading
         swipe_container.isRefreshing = model.loading
 
-        mAdapter.replace(model.sources)
+        adapter.replace(model.sources)
 
-        mCategory = model.categoryId
+        category = model.categoryId
         activity.invalidateOptionsMenu()
 
         when (model.categoryId) {
