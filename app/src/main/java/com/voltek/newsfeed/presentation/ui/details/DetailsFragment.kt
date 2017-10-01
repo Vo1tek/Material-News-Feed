@@ -8,9 +8,9 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.presentation.entity.ArticleUI
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.entity.ArticleUI
 import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -44,9 +44,9 @@ class DetailsFragment : BaseFragment(),
     fun providePresenter(): DetailsPresenter =
             DetailsPresenter(Parcels.unwrap(arguments.getParcelable(ARG_ARTICLE)))
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_details, container, false)
-    }
+    override fun onCreateView(
+            inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater?.inflate(R.layout.fragment_details, container, false)
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_fragment_details, menu)
@@ -64,12 +64,22 @@ class DetailsFragment : BaseFragment(),
                 .bind()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+        android.R.id.home -> {
+            mPresenter.notify(Event.Back())
+            true
+        }
+        else -> false
+    }
+
     override fun detachInputListeners() {
         resetCompositeDisposable()
     }
 
     override fun render(model: DetailsContract.DetailsModel) {
         if (model.articleLoaded) {
+            activity.title = model.source
+
             Glide
                     .with(context)
                     .load(model.urlToImage)

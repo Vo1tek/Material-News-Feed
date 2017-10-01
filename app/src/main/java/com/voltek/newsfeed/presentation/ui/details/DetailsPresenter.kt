@@ -9,6 +9,7 @@ import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
 import com.voltek.newsfeed.presentation.navigation.proxy.Router
 import com.voltek.newsfeed.presentation.base.BasePresenter
 import com.voltek.newsfeed.presentation.base.Event
+import com.voltek.newsfeed.presentation.navigation.command.CommandBack
 import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsModel
 import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 import javax.inject.Inject
@@ -30,6 +31,7 @@ class DetailsPresenter(private val article: ArticleUI) : BasePresenter<DetailsVi
             }
             is Event.OpenWebsite -> mRouter.execute(CommandOpenWebsite(article.url ?: ""))
             is Event.OpenNewsSources -> mRouter.execute(CommandOpenNewsSourcesScreen())
+            is Event.Back -> mRouter.execute(CommandBack())
         }
     }
 
@@ -44,6 +46,7 @@ class DetailsPresenter(private val article: ArticleUI) : BasePresenter<DetailsVi
             mModel.description = article.description ?: ""
             mModel.title = article.title ?: ""
             mModel.urlToImage = article.urlToImage ?: ""
+            mModel.source = article.source
             mModel.update()
         }
     }

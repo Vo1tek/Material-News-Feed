@@ -30,10 +30,6 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name="com.voltek.newsfeed.presentation.ui.details.DetailsActivity"
-            android:parentActivityName="com.voltek.newsfeed.presentation.ui.list.ListActivity" />
-
-        <activity
             android:name="com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesActivity"
             android:parentActivityName="com.voltek.newsfeed.presentation.ui.list.ListActivity" />
 

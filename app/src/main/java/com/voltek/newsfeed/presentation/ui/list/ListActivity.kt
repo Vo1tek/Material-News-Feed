@@ -4,16 +4,11 @@ import android.content.Intent
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseActivity
 import com.voltek.newsfeed.presentation.entity.ArticleUI
-import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticleDetailsScreen
-import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
-import com.voltek.newsfeed.presentation.navigation.command.CommandOpenWebsite
-import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
+import com.voltek.newsfeed.presentation.navigation.command.*
 import com.voltek.newsfeed.presentation.navigation.proxy.Command
-import com.voltek.newsfeed.presentation.ui.details.DetailsActivity
 import com.voltek.newsfeed.presentation.ui.details.DetailsFragment
 import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesActivity
 import kotlinx.android.synthetic.main.activity_list.*
-import org.parceler.Parcels
 
 class ListActivity : BaseActivity() {
 
@@ -38,6 +33,7 @@ class ListActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        title = getString(R.string.title_list)
     }
 
     override fun executeCommand(command: Command): Boolean = when (command) {
@@ -45,6 +41,7 @@ class ListActivity : BaseActivity() {
         is CommandOpenArticleDetailsScreen -> openDetails(command.article)
         is CommandShareArticle -> shareArticle(command)
         is CommandOpenWebsite -> openWebsite(command)
+        is CommandBack -> goBack()
         else -> false
     }
 
@@ -53,12 +50,15 @@ class ListActivity : BaseActivity() {
             replaceFragment(
                     DetailsFragment.newInstance(article),
                     R.id.details_fragment_container,
-                    DetailsFragment.TAG
-            )
+                    DetailsFragment.TAG,
+                    true)
         } else {
-            val intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra(DetailsFragment.ARG_ARTICLE, Parcels.wrap(article))
-            startActivity(intent)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            replaceFragment(
+                    DetailsFragment.newInstance(article),
+                    R.id.list_fragment_container,
+                    DetailsFragment.TAG,
+                    true)
         }
         return true
     }

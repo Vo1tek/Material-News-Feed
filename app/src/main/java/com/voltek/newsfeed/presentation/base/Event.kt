@@ -20,5 +20,7 @@ sealed class Event {
 
     class Share : Event()
 
+    class Back : Event()
+
     class FilterSources(val filter: String, val id: Int) : Event()
 }

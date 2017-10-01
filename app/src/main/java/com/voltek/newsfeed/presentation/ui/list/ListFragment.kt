@@ -27,15 +27,14 @@ class ListFragment : BaseFragment(),
         fun newInstance() = ListFragment()
     }
 
+    init {
+        setHasOptionsMenu(true)
+    }
+
     @InjectPresenter
     lateinit var mPresenter: ListPresenter
 
     private lateinit var mAdapter: ListAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mAdapter = ListAdapter(context, ArrayList())

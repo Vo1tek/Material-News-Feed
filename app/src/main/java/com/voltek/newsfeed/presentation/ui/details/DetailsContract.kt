@@ -14,6 +14,7 @@ object DetailsContract {
         var title: String = ""
         var description: String = ""
         var urlToImage: String = ""
+        var source: String = ""
     }
 
     interface DetailsView : BaseView {

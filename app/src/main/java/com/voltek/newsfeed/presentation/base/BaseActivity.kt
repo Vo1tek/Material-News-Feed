@@ -38,6 +38,11 @@ abstract class BaseActivity : MvpAppCompatActivity(),
     }
 
     // Base navigator commands
+    protected fun goBack(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     protected fun shareArticle(command: CommandShareArticle): Boolean {
         if (!command.url.isEmpty() && !command.title.isEmpty()) {
             val shareIntent = Intent(Intent.ACTION_SEND)
@@ -74,13 +79,12 @@ abstract class BaseActivity : MvpAppCompatActivity(),
     protected fun replaceFragment(
             fragment: BaseFragment,
             @IdRes id: Int,
-            tag: String
+            tag: String,
+            addToBackStack: Boolean = false
     ) {
         val transaction = supportFragmentManager.beginTransaction()
-
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-
-        transaction.replace(id, fragment, tag)
-        transaction.commit()
+        if (addToBackStack) transaction.addToBackStack(null)
+        transaction.replace(id, fragment, tag).commit()
     }
 }
