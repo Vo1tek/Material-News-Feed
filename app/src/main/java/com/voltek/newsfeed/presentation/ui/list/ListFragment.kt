@@ -2,11 +2,9 @@ package com.voltek.newsfeed.presentation.ui.list
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar
@@ -34,6 +32,11 @@ class ListFragment : BaseFragment(),
 
     private lateinit var mAdapter: ListAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mAdapter = ListAdapter(context, ArrayList())
         return inflater?.inflate(R.layout.fragment_list, container, false)
@@ -44,6 +47,10 @@ class ListFragment : BaseFragment(),
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = ScaleInAnimationAdapter(mAdapter)
         recycler_view.itemAnimator = SlideInLeftAnimator()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_fragment_list, menu)
     }
 
     override fun attachInputListeners() {
