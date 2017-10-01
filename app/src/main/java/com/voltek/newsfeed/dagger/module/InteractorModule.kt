@@ -1,9 +1,9 @@
 package com.voltek.newsfeed.dagger.module
 
-import com.voltek.newsfeed.domain.interactor.articles.GetArticlesInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.EnableNewsSourceInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesUpdatesInteractor
+import com.voltek.newsfeed.domain.use_case.articles.GetArticlesUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.EnableNewsSourceUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUpdatesUseCase
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -17,19 +17,19 @@ class InteractorModule(
 ) {
 
     @Provides
-    fun provideGetArticlesInteractor(): GetArticlesInteractor =
-            GetArticlesInteractor(ioScheduler, uiScheduler)
+    fun provideGetArticlesInteractor(): GetArticlesUseCase =
+            GetArticlesUseCase(ioScheduler, uiScheduler)
 
     @Provides
-    fun provideNewsSourcesInteractor(): NewsSourcesInteractor =
-            NewsSourcesInteractor(ioScheduler, uiScheduler)
+    fun provideNewsSourcesInteractor(): NewsSourcesUseCase =
+            NewsSourcesUseCase(ioScheduler, uiScheduler)
 
     @Provides
-    fun provideEnableNewsSourceInteractor(): EnableNewsSourceInteractor =
-            EnableNewsSourceInteractor(computationScheduler, uiScheduler)
+    fun provideEnableNewsSourceInteractor(): EnableNewsSourceUseCase =
+            EnableNewsSourceUseCase(computationScheduler, uiScheduler)
 
     @Provides
     @Singleton
-    fun provideNewsSourcesUpdatesInteractor(): NewsSourcesUpdatesInteractor =
-            NewsSourcesUpdatesInteractor(computationScheduler, uiScheduler)
+    fun provideNewsSourcesUpdatesInteractor(): NewsSourcesUpdatesUseCase =
+            NewsSourcesUpdatesUseCase(computationScheduler, uiScheduler)
 }

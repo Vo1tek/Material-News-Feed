@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.domain.interactor
+package com.voltek.newsfeed.domain.use_case
 
 /**
  * Generic class for interactor execution results.

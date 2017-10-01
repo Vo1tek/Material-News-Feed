@@ -2,9 +2,9 @@ package com.voltek.newsfeed.presentation.ui.news_sources
 
 import com.arellomobile.mvp.InjectViewState
 import com.voltek.newsfeed.NewsApp
-import com.voltek.newsfeed.domain.interactor.Parameter
-import com.voltek.newsfeed.domain.interactor.news_sources.EnableNewsSourceInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
+import com.voltek.newsfeed.domain.use_case.Parameter
+import com.voltek.newsfeed.domain.use_case.news_sources.EnableNewsSourceUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUseCase
 import com.voltek.newsfeed.presentation.base.BasePresenter
 import com.voltek.newsfeed.presentation.base.Event
 import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesModel
@@ -17,10 +17,10 @@ import javax.inject.Inject
 class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
 
     @Inject
-    lateinit var mNewsSources: NewsSourcesInteractor
+    lateinit var mNewsSources: NewsSourcesUseCase
 
     @Inject
-    lateinit var mNewsSourceEnable: EnableNewsSourceInteractor
+    lateinit var mNewsSourceEnable: EnableNewsSourceUseCase
 
     private val mModel: NewsSourcesModel =
             NewsSourcesModel { viewState.render(it as NewsSourcesModel) }
@@ -33,7 +33,7 @@ class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
             }
             is Event.Refresh -> {
                 mModel.resetId()
-                loadNewsSources(NewsSourcesInteractor.REFRESH)
+                loadNewsSources(NewsSourcesUseCase.REFRESH)
             }
             is Event.EnableNewsSource -> {
                 mNewsSourceEnable.execute(
@@ -58,7 +58,7 @@ class NewsSourcesPresenter : BasePresenter<NewsSourcesView>() {
 
         bind(arrayOf(mNewsSources, mNewsSourceEnable))
 
-        loadNewsSources(NewsSourcesInteractor.GET)
+        loadNewsSources(NewsSourcesUseCase.GET)
     }
 
     private fun loadNewsSources(filter: String) {

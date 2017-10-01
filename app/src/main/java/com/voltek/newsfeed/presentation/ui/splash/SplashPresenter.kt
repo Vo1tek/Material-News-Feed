@@ -4,8 +4,8 @@ import com.arellomobile.mvp.InjectViewState
 import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.domain.exception.NoNewsSourcesSelectedException
 import com.voltek.newsfeed.presentation.entity.SourceUI
-import com.voltek.newsfeed.domain.interactor.Parameter
-import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
+import com.voltek.newsfeed.domain.use_case.Parameter
+import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUseCase
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticlesListScreen
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.presentation.navigation.command.CommandSystemMessage
@@ -23,7 +23,7 @@ class SplashPresenter : BasePresenter<SplashView>() {
     lateinit var mRouter: Router
 
     @Inject
-    lateinit var mNewsSources: NewsSourcesInteractor
+    lateinit var mNewsSources: NewsSourcesUseCase
 
     override fun notify(event: Event) {}
 
@@ -39,7 +39,7 @@ class SplashPresenter : BasePresenter<SplashView>() {
         // Fetch news sources in background.
         // Check, if there is no enabled news sources, open NewsSources screen with proper message.
         mNewsSources.execute(
-                Parameter(NewsSourcesInteractor.GET),
+                Parameter(NewsSourcesUseCase.GET),
                 Consumer {
                     result(hasEnabled(it?.data ?: ArrayList()))
                 },

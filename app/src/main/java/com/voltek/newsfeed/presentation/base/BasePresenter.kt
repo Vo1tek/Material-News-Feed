@@ -1,11 +1,11 @@
 package com.voltek.newsfeed.presentation.base
 
 import com.arellomobile.mvp.MvpPresenter
-import com.voltek.newsfeed.domain.interactor.BaseInteractor
+import com.voltek.newsfeed.domain.use_case.BaseUseCase
 
 abstract class BasePresenter<View : BaseView> : MvpPresenter<View>() {
 
-    private val interactors = ArrayList<BaseInteractor<*, *>>()
+    private val interactors = ArrayList<BaseUseCase<*, *>>()
 
     abstract fun notify(event: Event)
 
@@ -24,6 +24,6 @@ abstract class BasePresenter<View : BaseView> : MvpPresenter<View>() {
             interactor.unsubscribe()
     }
 
-    protected fun bind(interactors: Array<BaseInteractor<*, *>>) =
-            this.interactors.addAll(interactors)
+    protected fun bind(useCases: Array<BaseUseCase<*, *>>) =
+            this.interactors.addAll(useCases)
 }

@@ -16,7 +16,7 @@ App built with sort of MVI + Clean Architecture.
 
 Presentation layer is done a bit diffrent from classic MVP. There is [Model](https://github.com/IvanAntsiferov/News-Feed-App/blob/master/app/src/main/java/com/voltek/newsfeed/presentation/BaseModel.kt) class instance in Presenter, that holds current View state. Presenter does not send any commands to view, istead of this, it changes Model properties, and than View `render` changes. View input [events](https://github.com/IvanAntsiferov/News-Feed-App/blob/master/app/src/main/java/com/voltek/newsfeed/presentation/Event.kt) sent to presenter through `notify` method.
 
-Domain layer works much more like MVP + Clean Architecture approach. There is an interactors, thats represents use cases and repositories, thats works with data layer and mapping entities from `RAW` to `UI` versions.
+Domain layer works much more like MVP + Clean Architecture approach. There is an useCases, thats represents use cases and repositories, thats works with data layer and mapping entities from `RAW` to `UI` versions.
 
 Data layer works directly with Android specific tools: network calls, DB queries and stuff like that. So domain layer knows nothing about Android SDK.
 

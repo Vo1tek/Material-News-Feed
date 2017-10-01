@@ -9,7 +9,7 @@ import com.voltek.newsfeed.data.storage.NewsSourcesStorage
 import com.voltek.newsfeed.domain.exception.NoConnectionException
 import com.voltek.newsfeed.domain.Mapper
 import com.voltek.newsfeed.presentation.entity.SourceUI
-import com.voltek.newsfeed.domain.interactor.Result
+import com.voltek.newsfeed.domain.use_case.Result
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

@@ -1,10 +1,10 @@
 package com.voltek.newsfeed.dagger.component
 
 import com.voltek.newsfeed.dagger.module.RepositoryModule
-import com.voltek.newsfeed.domain.interactor.articles.GetArticlesInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.EnableNewsSourceInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesInteractor
-import com.voltek.newsfeed.domain.interactor.news_sources.NewsSourcesUpdatesInteractor
+import com.voltek.newsfeed.domain.use_case.articles.GetArticlesUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.EnableNewsSourceUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUseCase
+import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUpdatesUseCase
 import dagger.Component
 import javax.inject.Singleton
 
@@ -14,11 +14,11 @@ import javax.inject.Singleton
 )
 interface InteractorComponent {
 
-    fun inject(interactor: GetArticlesInteractor)
+    fun inject(interactor: GetArticlesUseCase)
 
-    fun inject(interactor: NewsSourcesInteractor)
+    fun inject(interactor: NewsSourcesUseCase)
 
-    fun inject(interactor: NewsSourcesUpdatesInteractor)
+    fun inject(interactor: NewsSourcesUpdatesUseCase)
 
-    fun inject(interactor: EnableNewsSourceInteractor)
+    fun inject(interactor: EnableNewsSourceUseCase)
 }
