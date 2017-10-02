@@ -1,7 +1,7 @@
 package com.voltek.newsfeed.data.storage
 
 import com.vicpin.krealmextensions.*
-import com.voltek.newsfeed.data.entity.SourceDB
+import com.voltek.newsfeed.data.storage.entity.SourceDB
 
 class NewsSourcesStorage {
 

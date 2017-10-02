@@ -1,4 +1,4 @@
-package com.voltek.newsfeed.data.entity
+package com.voltek.newsfeed.data.storage.entity
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

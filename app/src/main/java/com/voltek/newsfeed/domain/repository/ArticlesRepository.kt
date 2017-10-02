@@ -22,7 +22,7 @@ class ArticlesRepository(private val api: NewsApi, private val res: ResourcesMan
                             val result = ArrayList<ArticleUI>()
                             val sourceTitle = ArticleUI()
                             result.add(sourceTitle)
-                            result.addAll(it.articles.map { Mapper.articleRAWtoUI(it) })
+                            result.addAll(it.articles.map { Mapper.articleAPItoUI(it) })
                             result.forEach { article -> article.source = source.name }
                             emitter.onNext(Result(result))
                         }, {

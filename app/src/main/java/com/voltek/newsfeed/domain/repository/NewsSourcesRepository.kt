@@ -1,8 +1,8 @@
 package com.voltek.newsfeed.domain.repository
 
 import com.voltek.newsfeed.R
-import com.voltek.newsfeed.data.entity.SourceDB
-import com.voltek.newsfeed.data.entity.SourceRAW
+import com.voltek.newsfeed.data.storage.entity.SourceDB
+import com.voltek.newsfeed.data.network.entity.SourceAPI
 import com.voltek.newsfeed.data.network.NewsApi
 import com.voltek.newsfeed.data.platform.ResourcesManager
 import com.voltek.newsfeed.data.storage.NewsSourcesStorage
@@ -34,7 +34,7 @@ class NewsSourcesRepository(
         if (sourcesCache.isEmpty()) {
             api.fetchSources()
                     .map { it.sources }
-                    .map { it.map { Mapper.sourceRAWtoDB(it) } }
+                    .map { it.map { Mapper.sourceAPItoDB(it) } }
                     .subscribe({
                         storage.save(it)
                         emitter.onNext(Result(storage.queryAll().map { Mapper.sourceDBtoUI(it) }))
@@ -82,14 +82,14 @@ class NewsSourcesRepository(
             api.fetchSources()
                     .map { it.sources }
                     .doOnSuccess(this::cacheSources)
-                    // TODO handle errors
-                    /*.onErrorReturn {
+                    .map { Result<List<SourceUI>?>() }
+                    .onErrorReturn {
                         val message: String = when (it) {
                             is NoConnectionException -> res.getString(R.string.error_no_connection)
                             else -> res.getString(R.string.error_request_failed)
                         }
-                        Result(storage.queryAll().map { Mapper.Source(it) }, message)
-                    }*/
+                        Result(storage.queryAll().map { Mapper.sourceDBtoUI(it) }, message)
+                    }
                     .flatMap {
                         Single.fromCallable { Result(storage.queryAll().map { Mapper.sourceDBtoUI(it) }) }
                     }
@@ -109,9 +109,9 @@ class NewsSourcesRepository(
         }
     }
 
-    private fun cacheSources(sources: List<SourceRAW>) {
+    private fun cacheSources(sources: List<SourceAPI>) {
         val current = storage.queryEnabled()
-        val new = (sources as ArrayList).map { Mapper.sourceRAWtoDB(it) }
+        val new = (sources as ArrayList).map { Mapper.sourceAPItoDB(it) }
 
         for (source in new)
             for (enabled in current)

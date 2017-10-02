@@ -1,6 +1,6 @@
-package com.voltek.newsfeed.data.entity
+package com.voltek.newsfeed.data.network.entity
 
-data class ArticleRAW(
+data class ArticleAPI(
         val author: String? = null,
         val title: String? = null,
         val description: String? = null,
