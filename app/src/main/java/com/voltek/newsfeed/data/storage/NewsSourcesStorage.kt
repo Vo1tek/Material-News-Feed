@@ -1,26 +1,26 @@
 package com.voltek.newsfeed.data.storage
 
 import com.vicpin.krealmextensions.*
-import com.voltek.newsfeed.data.entity.SourceRAW
+import com.voltek.newsfeed.data.entity.SourceDB
 
 class NewsSourcesStorage {
 
-    fun queryAll(): List<SourceRAW> = SourceRAW().queryAll()
+    fun queryAll(): List<SourceDB> = SourceDB().queryAll()
 
-    fun queryEnabled(): List<SourceRAW> =
-            SourceRAW().query { query -> query.equalTo("isEnabled", true) }
+    fun queryEnabled(): List<SourceDB> =
+            SourceDB().query { query -> query.equalTo("isEnabled", true) }
 
-    fun queryCategory(category: String): List<SourceRAW> =
-            SourceRAW().query { query -> query.equalTo("category", category.toLowerCase()) }
+    fun queryCategory(category: String): List<SourceDB> =
+            SourceDB().query { query -> query.equalTo("category", category.toLowerCase()) }
 
-    fun findById(id: String): SourceRAW? =
-            SourceRAW().queryFirst { query -> query.equalTo("id", id) }
+    fun findById(id: String): SourceDB? =
+            SourceDB().queryFirst { query -> query.equalTo("id", id) }
 
-    fun save(items: List<SourceRAW>) {
+    fun save(items: List<SourceDB>) {
         items.saveAll()
     }
 
     fun deleteAll() {
-        SourceRAW().deleteAll()
+        SourceDB().deleteAll()
     }
 }

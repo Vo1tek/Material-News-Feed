@@ -1,6 +1,7 @@
 package com.voltek.newsfeed.domain.repository
 
 import com.voltek.newsfeed.R
+import com.voltek.newsfeed.data.entity.SourceDB
 import com.voltek.newsfeed.data.entity.SourceRAW
 import com.voltek.newsfeed.data.network.NewsApi
 import com.voltek.newsfeed.data.platform.ResourcesManager
@@ -32,9 +33,11 @@ class NewsSourcesRepository(
 
         if (sourcesCache.isEmpty()) {
             api.fetchSources()
+                    .map { it.sources }
+                    .map { it.map { Mapper.sourceRAWtoDB(it) } }
                     .subscribe({
-                        storage.save(it.sources)
-                        emitter.onNext(Result(storage.queryAll().map { Mapper.Source(it) }))
+                        storage.save(it)
+                        emitter.onNext(Result(storage.queryAll().map { Mapper.sourceDBtoUI(it) }))
                     }, {
                         val message: String = when (it) {
                             is NoConnectionException -> res.getString(R.string.error_no_connection)
@@ -43,7 +46,7 @@ class NewsSourcesRepository(
                         emitter.onNext(Result(null, message))
                     })
         } else {
-            emitter.onNext(Result(sourcesCache.map { Mapper.Source(it) }))
+            emitter.onNext(Result(sourcesCache.map { Mapper.sourceDBtoUI(it) }))
         }
 
         emitter.onComplete()
@@ -52,7 +55,7 @@ class NewsSourcesRepository(
     fun getCategory(category: String): Single<Result<List<SourceUI>?>> = Single.create {
         val emitter = it
 
-        val query: List<SourceRAW>
+        val query: List<SourceDB>
         var message = ""
 
         if (category == res.getString(R.string.category_all)) {
@@ -72,7 +75,7 @@ class NewsSourcesRepository(
                 message = res.getString(R.string.error_no_news_sources_for_category)
         }
 
-        emitter.onSuccess(Result(query.map { Mapper.Source(it) }, message))
+        emitter.onSuccess(Result(query.map { Mapper.sourceDBtoUI(it) }, message))
     }
 
     fun refresh(): Single<Result<List<SourceUI>?>> =
@@ -85,10 +88,10 @@ class NewsSourcesRepository(
                             is NoConnectionException -> res.getString(R.string.error_no_connection)
                             else -> res.getString(R.string.error_request_failed)
                         }
-                        Result(mDb.queryAll().map { Mapper.Source(it) }, message)
+                        Result(storage.queryAll().map { Mapper.Source(it) }, message)
                     }*/
                     .flatMap {
-                        Single.fromCallable { Result(storage.queryAll().map { Mapper.Source(it) }) }
+                        Single.fromCallable { Result(storage.queryAll().map { Mapper.sourceDBtoUI(it) }) }
                     }
 
     fun update(id: String, isEnabled: Boolean): Completable = Completable.create {
@@ -108,7 +111,7 @@ class NewsSourcesRepository(
 
     private fun cacheSources(sources: List<SourceRAW>) {
         val current = storage.queryEnabled()
-        val new = sources as ArrayList
+        val new = (sources as ArrayList).map { Mapper.sourceRAWtoDB(it) }
 
         for (source in new)
             for (enabled in current)

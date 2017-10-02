@@ -1,26 +1,12 @@
 package com.voltek.newsfeed.data.entity
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
-import io.realm.annotations.RealmClass
-
-@RealmClass
-open class SourceRAW : RealmObject() {
-
-    @PrimaryKey
-    var id: String = ""
-
-    var name: String = ""
-
-    var description: String = ""
-
-    var url: String = ""
-
-    var category: String = ""
-
-    var language: String = ""
-
-    var country: String = ""
-
-    var isEnabled: Boolean = false
-}
+data class SourceRAW(
+        val id: String? = null,
+        val name: String? = null,
+        val description: String? = null,
+        val url: String? = null,
+        val category: String? = null,
+        val language: String? = null,
+        val country: String? = null,
+        val isEnabled: Boolean? = null
+)
