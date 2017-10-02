@@ -31,3 +31,7 @@ script:
 - ./gradlew assembleDebug --stacktrace
 - ./gradlew test --info
 - ./gradlew connectedCheck
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  

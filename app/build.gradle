@@ -59,6 +59,8 @@ android {
                 '**/*RealmProxy*.*'
         ]
     }
+
+    check.dependsOn jacocoAndroidUnitTestReport
 }
 
 repositories {
