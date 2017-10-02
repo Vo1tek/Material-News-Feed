@@ -22,11 +22,14 @@ class ListActivity : BaseActivity() {
 
         mDualPane = details_fragment_container != null
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             replaceFragment(
                     ListFragment.newInstance(),
                     R.id.list_fragment_container,
                     ListFragment.TAG)
+        } else if (!mDualPane && supportFragmentManager.findFragmentByTag(DetailsFragment.TAG) != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onBackPressed() {
