@@ -47,7 +47,7 @@ script:
     - android-wait-for-emulator
     - adb devices
     - adb shell input keyevent 82 &
-    - ./gradlew build jacocoTestReport
+    - ./gradlew assembleDebug jacocoTestReport
     - ./gradlew connectedCheck -PdisablePreDex --stacktrace
 
 before_install:
