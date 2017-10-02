@@ -5,11 +5,14 @@ buildscript {
 
     repositories {
         jcenter()
+        mavenCentral()
+        maven {
+            url 'https://maven.google.com'
+        }
     }
 
     dependencies {
         classpath "com.android.tools.build:gradle:$versions.androidGradlePlugin"
-        classpath "com.dicedmelon.gradle:jacoco-android:$versions.jacocoAndroid"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinGradlePlugin"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlinGradlePlugin"
         classpath "io.realm:realm-gradle-plugin:$versions.realmGradlePlugin"
@@ -19,6 +22,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 

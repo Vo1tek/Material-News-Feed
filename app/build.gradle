@@ -1,9 +1,11 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco-android'
+apply plugin: 'jacoco'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+
+apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 25
@@ -15,6 +17,10 @@ android {
         targetSdkVersion 25
         versionCode 2
         versionName "1.1"
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     buildTypes {
@@ -38,29 +44,6 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
-
-    // Report .../app/build/reports/jacoco/jacocoTestDebugUnitTestReport/html/index.html
-    jacocoAndroidUnitTestReport {
-        csv.enabled false
-        html.enabled true
-        xml.enabled true
-
-        excludes += [
-                // Dagger 2
-                'com.voltek.newsfeed.dagger/**',
-                '**/Dagger*.*',
-                '**/*Module*.*',
-                '**/*Component*.*',
-                '**/*_Factory.*',
-                '**/*_MembersInjector.*',
-                // Moxy
-                '**/MoxyReflector*.*',
-                // Realm
-                '**/*RealmProxy*.*'
-        ]
-    }
-
-    check.dependsOn jacocoAndroidUnitTestReport
 }
 
 repositories {

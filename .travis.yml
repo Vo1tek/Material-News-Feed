@@ -1,37 +1,57 @@
 language: android
-jdk:
-- oraclejdk8
-android:
-  components:
-    - tools # to get the new `repository-11.xml`
-    - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
-    - platform-tools
-    - build-tools-25.0.3
-    - android-25
-    - android-22
-    - extra-android-m2repository  
-    - sys-img-armeabi-v7a-android-22
-
-before_install:
-- chmod +x gradlew
+jdk: oraclejdk8
+sudo: false
 
 env:
-  global:
-   # install timeout in minutes (2 minutes by default)
-    - ADB_INSTALL_TIMEOUT=8
+    matrix:
+        - ANDROID_TARGET=android-21 ANDROID_ABI=armeabi-v7a
+    global:
+        - ADB_INSTALL_TIMEOUT=10
 
-# Emulator Management: Create, Start and Wait
+before_cache:
+    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
+android:
+    update_sdk: true
+    components:
+        - platform-tools
+        - tools
+        - build-tools-25.0.3
+        - android-21
+        - android-25
+        - extra-google-m2repository
+        - extra-android-m2repository
+        - sys-img-armeabi-v7a-android-21
+
+licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-  - emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+    - chmod +x gradlew
+    - android list targets
+    - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+    - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
-- ./gradlew assembleDebug --stacktrace
-- ./gradlew test --info
-- ./gradlew connectedCheck
+    - echo "Travis branch is $TRAVIS_BRANCH"
+    - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
+    - android-wait-for-emulator
+    - adb devices
+    - adb shell input keyevent 82 &
+    - ./gradlew build jacocoTestReport
+    - ./gradlew connectedCheck -PdisablePreDex --stacktrace
+
+before_install:
+    - pip install --user codecov
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-  
+    - codecov
