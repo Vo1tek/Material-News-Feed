@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco-android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -36,6 +37,27 @@ android {
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
+    }
+
+    // Report .../app/build/reports/jacoco/jacocoTestDebugUnitTestReport/html/index.html
+    jacocoAndroidUnitTestReport {
+        csv.enabled false
+        html.enabled true
+        xml.enabled true
+
+        excludes += [
+                // Dagger 2
+                'com.voltek.newsfeed.dagger/**',
+                '**/Dagger*.*',
+                '**/*Module*.*',
+                '**/*Component*.*',
+                '**/*_Factory.*',
+                '**/*_MembersInjector.*',
+                // Moxy
+                '**/MoxyReflector*.*',
+                // Realm
+                '**/*RealmProxy*.*'
+        ]
     }
 }
 

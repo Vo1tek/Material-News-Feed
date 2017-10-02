@@ -1,6 +1,7 @@
 ext.versions = [
         androidGradlePlugin  : '2.3.3',
-        kotlinGradlePlugin   : '1.1.4-2',
+        jacocoAndroid        : '0.1.2',
+        kotlinGradlePlugin   : '1.1.51',
         realmGradlePlugin    : '3.5.0',
 
         supportLibrary       : '25.3.1',

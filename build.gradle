@@ -9,6 +9,7 @@ buildscript {
 
     dependencies {
         classpath "com.android.tools.build:gradle:$versions.androidGradlePlugin"
+        classpath "com.dicedmelon.gradle:jacoco-android:$versions.jacocoAndroid"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinGradlePlugin"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlinGradlePlugin"
         classpath "io.realm:realm-gradle-plugin:$versions.realmGradlePlugin"
