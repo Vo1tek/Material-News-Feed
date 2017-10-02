@@ -9,8 +9,6 @@ import com.voltek.newsfeed.presentation.base.Event
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenArticleDetailsScreen
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSourcesScreen
 import com.voltek.newsfeed.presentation.navigation.proxy.Router
-import com.voltek.newsfeed.presentation.ui.list.ListContract.ListModel
-import com.voltek.newsfeed.presentation.ui.list.ListContract.ListView
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 

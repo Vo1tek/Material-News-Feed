@@ -9,8 +9,6 @@ import com.voltek.newsfeed.presentation.navigation.command.CommandOpenNewsSource
 import com.voltek.newsfeed.presentation.navigation.command.CommandOpenWebsite
 import com.voltek.newsfeed.presentation.navigation.command.CommandShareArticle
 import com.voltek.newsfeed.presentation.navigation.proxy.Router
-import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsModel
-import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 
 @InjectViewState
 class DetailsPresenter(private val router: Router) : BasePresenter<DetailsView>() {

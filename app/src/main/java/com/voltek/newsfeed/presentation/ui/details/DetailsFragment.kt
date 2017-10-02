@@ -11,7 +11,6 @@ import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
 import com.voltek.newsfeed.presentation.entity.ArticleUI
-import com.voltek.newsfeed.presentation.ui.details.DetailsContract.DetailsView
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.parceler.Parcels
@@ -46,8 +45,8 @@ class DetailsFragment : BaseFragment(),
     @ProvidePresenter
     fun providePresenter() = presenter
 
-    override fun onCreateView(
-            inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? =
             inflater?.inflate(R.layout.fragment_details, container, false)
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -80,7 +79,7 @@ class DetailsFragment : BaseFragment(),
         resetCompositeDisposable()
     }
 
-    override fun render(model: DetailsContract.DetailsModel) {
+    override fun render(model: DetailsModel) {
         if (model.articleLoaded) {
             activity.title = model.source
 

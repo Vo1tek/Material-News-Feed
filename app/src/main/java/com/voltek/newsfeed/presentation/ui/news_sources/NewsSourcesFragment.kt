@@ -11,7 +11,6 @@ import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
-import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesView
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -107,7 +106,7 @@ class NewsSourcesFragment : BaseFragment(),
         resetCompositeDisposable()
     }
 
-    override fun render(model: NewsSourcesContract.NewsSourcesModel) {
+    override fun render(model: NewsSourcesModel) {
         swipe_container.isEnabled = model.loading
         swipe_container.isRefreshing = model.loading
 

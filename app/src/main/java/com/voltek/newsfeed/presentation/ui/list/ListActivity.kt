@@ -26,8 +26,7 @@ class ListActivity : BaseActivity() {
             replaceFragment(
                     ListFragment.newInstance(),
                     R.id.list_fragment_container,
-                    ListFragment.TAG
-            )
+                    ListFragment.TAG)
     }
 
     override fun onBackPressed() {

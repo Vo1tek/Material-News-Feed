@@ -6,8 +6,6 @@ import com.voltek.newsfeed.domain.use_case.news_sources.EnableNewsSourceUseCase
 import com.voltek.newsfeed.domain.use_case.news_sources.NewsSourcesUseCase
 import com.voltek.newsfeed.presentation.base.BasePresenter
 import com.voltek.newsfeed.presentation.base.Event
-import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesModel
-import com.voltek.newsfeed.presentation.ui.news_sources.NewsSourcesContract.NewsSourcesView
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 

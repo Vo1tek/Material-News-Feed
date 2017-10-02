@@ -13,8 +13,6 @@ import com.voltek.newsfeed.NewsApp
 import com.voltek.newsfeed.R
 import com.voltek.newsfeed.presentation.base.BaseFragment
 import com.voltek.newsfeed.presentation.base.Event
-import com.voltek.newsfeed.presentation.ui.list.ListContract.ListModel
-import com.voltek.newsfeed.presentation.ui.list.ListContract.ListView
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
