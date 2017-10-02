@@ -53,10 +53,12 @@ class NewsSourcesPresenter(
     }
 
     private fun loadNewsSources(filter: String) {
-        model.sources.clear()
-        model.loading = true
-        model.message = ""
-        model.update()
+        with(model) {
+            sources.clear()
+            loading = true
+            message = ""
+            update()
+        }
 
         newsSources.execute(
                 Parameter(filter),

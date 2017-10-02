@@ -47,17 +47,21 @@ class ListPresenter(
     }
 
     private fun loadArticles() {
-        model.articles.clear()
-        model.loading = true
-        model.message = ""
-        model.update()
+        with(model) {
+            articles.clear()
+            loading = true
+            message = ""
+            update()
+        }
 
         articles.execute(
                 Parameter(),
                 Consumer {
-                    model.addData(it.data)
-                    model.message = it.message
-                    model.update()
+                    with(model) {
+                        addData(it.data)
+                        message = it.message
+                        update()
+                    }
                 },
                 Consumer {
                     model.message = it.message ?: ""

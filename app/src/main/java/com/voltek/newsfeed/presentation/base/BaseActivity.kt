@@ -46,9 +46,11 @@ abstract class BaseActivity : MvpAppCompatActivity(),
     protected fun shareArticle(command: CommandShareArticle): Boolean {
         if (!command.url.isEmpty() && !command.title.isEmpty()) {
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, command.url)
+            with(shareIntent) {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, command.url)
+            }
             startActivity(Intent.createChooser(shareIntent, command.title))
         }
         return true

@@ -34,15 +34,19 @@ class DetailsPresenter(private val router: Router) : BasePresenter<DetailsView>(
         article = articleUI
 
         if (article.isEmpty()) {
-            model.articleLoaded = false
-            model.update()
+            with(model) {
+                articleLoaded = false
+                update()
+            }
         } else {
-            model.articleLoaded = true
-            model.description = article.description ?: ""
-            model.title = article.title ?: ""
-            model.urlToImage = article.urlToImage ?: ""
-            model.source = article.source
-            model.update()
+            with(model) {
+                articleLoaded = true
+                description = article.description ?: ""
+                title = article.title ?: ""
+                urlToImage = article.urlToImage ?: ""
+                source = article.source
+                update()
+            }
         }
     }
 }
