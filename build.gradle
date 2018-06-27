@@ -12,6 +12,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinGradlePlugin"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlinGradlePlugin"
         classpath "io.realm:realm-gradle-plugin:$versions.realmGradlePlugin"
+        classpath "com.dicedmelon.gradle:jacoco-android:$versions.jacocoGradle"
     }
 }
 

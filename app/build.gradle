@@ -1,11 +1,10 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco'
+apply plugin: 'jacoco-android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
-apply from: 'gradle/jacoco.gradle'
 apply from: "gradle/utils.gradle"
 
 def KEY_STORE_DIR = "keystore/"
@@ -72,6 +71,17 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+}
+
+jacocoAndroidUnitTestReport {
+    excludes += ['com.voltek.newsfeed.dagger/**',
+                 '**/Dagger*.*',
+                 '**/*Module*.*',
+                 '**/*Component*.*',
+                 '**/*_Factory.*',
+                 '**/*_MembersInjector.*',
+                 '**/MoxyReflector*.*',
+                 '**/*RealmProxy*.*']
 }
 
 androidExtensions {
